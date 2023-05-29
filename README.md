@@ -4,3 +4,5 @@
 # 分支
 
 代码在master分支
+
+# apk 在release中
