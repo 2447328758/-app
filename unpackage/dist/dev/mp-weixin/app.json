@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/detail/detail",
+    "pages/setting/setting",
+    "pages/canvas/canvas",
+    "pages/addModel/addModel"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "backgroundColor": "#1111ff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "连接"
+      },
+      {
+        "pagePath": "pages/detail/detail",
+        "text": "物模型"
+      },
+      {
+        "pagePath": "pages/canvas/canvas",
+        "text": "画布"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

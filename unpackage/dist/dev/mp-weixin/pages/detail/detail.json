@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "物模型",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "wm-list-add": "/components/wm-list-add/wm-list-add",
+    "zai-lattice": "/components/zai-lattice/index"
+  }
+}

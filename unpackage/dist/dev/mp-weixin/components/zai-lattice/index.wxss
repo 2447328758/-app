@@ -1,0 +1,50 @@
+.zai-lattice-box{
+	width: 100%;
+    position: relative;
+    background: #4F496C;
+    color: #fff;
+    border-radius: 30rpx;
+}
+.zai-lattice-box-shadow{
+	box-shadow: 0 4rpx 30rpx 0 #3c3556d9;
+}
+.zai-lattice-box .zai-lattice-box-p{
+	padding: 40rpx;
+    position: relative;
+}
+.zai-lattice-box-p .zai-lattice-title{
+	color: #EFEEF2;
+	margin-top: 40rpx;
+    font-size: 34rpx;
+}
+.zai-lattice-box-p .zai-lattice-num{
+	margin-bottom: 30rpx;
+}
+.zai-lattice-box-p .zai-lattice-num .zai-lattice-num-title{
+	font-weight: 600;
+	font-size: 52rpx;
+}
+.zai-lattice-box-p .zai-lattice-num .zai-lattice-num-unit{
+	font-size: 34rpx;
+    margin-left: 10rpx;
+    color: #A1A0B5;
+}
+.zai-lattice-box-p .zai-lattice-icon{
+	color: #A1A0B5;
+	font-size: 66rpx;
+    position: absolute;
+    right: 40rpx;
+    bottom: 40rpx;
+}
+.zai-lattice-box-p .zai-lattice-img{
+    position: absolute;
+    right: 40rpx;
+    bottom: 40rpx;
+    width: 66rpx;
+    height: 66rpx;
+}
+.zai-lattice-box-p .zai-lattice-img .zai-lattice-image{
+	width: 66rpx;
+    height: 66rpx;
+}
+

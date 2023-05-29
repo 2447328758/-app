@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "画布",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "footpartial": "/components/footpartial/footpartial"
+  }
+}
