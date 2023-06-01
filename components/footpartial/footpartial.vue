@@ -22,9 +22,9 @@ function FootPartial(x,y,min,max,value,path,startPos,color,width,height,id){
 		context.translate(this.pos[0],this.pos[1])//平移
 		
 		//绘制轮廓
-		context.setFontSize(15)
-		context.setFillStyle("rgba(255,0,0,"+this.percent+")")
-		context.strokeRect(0,0,this.width,this.height)
+		// context.setFontSize(15)
+		// context.setFillStyle("rgba(255,0,0,"+this.percent+")")
+		// context.strokeRect(0,0,this.width,this.height)
 		
 		// 绘制鞋垫传感器轮廓
 		context.beginPath()
