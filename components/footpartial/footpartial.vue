@@ -56,9 +56,7 @@ import {foot_model} from "../../model.js"
 export default {
 	name: "footpartial",
 	props: {
-		x: {
-			default: "xiaoming",
-		},
+		
 	},
 	data(){
 		return {
@@ -87,8 +85,8 @@ export default {
 	},
 	methods: {
 		update(data){//key 和 value 是Number类型，是一个对象
-		let rate = this.windowWidth/this.imageWidth
-		this.context.scale(rate,rate)
+			let rate = this.rate
+			this.context.scale(rate,rate)
 			for(let i in data){
 				this.foot[i].setValue(data[i])
 			}
@@ -98,6 +96,17 @@ export default {
 			this.context.draw()
 		}
 	},
+	computed:{
+		rate(){
+			let rate = this.windowWidth/this.imageWidth
+			
+			if (this.windowHeight/this.windowWidth > this.imageHeight/this.imageWidth)
+				rate = this.windowWidth/this.imageWidth
+			else
+				rate = this.windowHeight/this.imageHeight
+			return rate
+		}
+	}
 }
 </script>
 

@@ -1,4 +1,5 @@
 {
-  "navigationBarTitleText": "连接",
+  "navigationBarTitleText": "连接信息",
+  "navigationBarBackgroundColor": "#6b6882",
   "usingComponents": {}
 }

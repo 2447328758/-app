@@ -1,1 +1,1 @@
-<view><view class="_div">Hello</view><footpartial vue-id="6571c200-1" bind:__l="__l"></footpartial></view>
+<view class="content"><footpartial class="vue-ref" vue-id="6571c200-1" data-ref="footCanvas" bind:__l="__l"></footpartial></view>

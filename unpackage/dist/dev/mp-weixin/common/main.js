@@ -24,7 +24,6 @@ _vue.default.config.productionTip = false;
 _App.default.mpType = 'app';
 var app = new _vue.default(_objectSpread({}, _App.default));
 createApp(app).$mount();
-var mqtt = __webpack_require__(/*! mqtt */ 34);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/wx.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["createApp"]))
 
 /***/ }),
@@ -121,18 +120,22 @@ var _default = (_onLaunch$onShow$onHi = {
     }],
     options: (0, _defineProperty2.default)({
       keepalive: 45,
-      clientId: "user_1",
+      clientId: "test_2",
       clean: true,
       connectTimeout: 30000,
-      username: "user_1",
-      password: "abc123"
+      username: "test_2",
+      password: "123456"
     }, "keepalive", 10),
-    broker: "wss://192.168.199.156:8084/mqtt",
+    //192.168.1.100
+    //192.168.*.156
+
+    broker: "wss://192.168.37.156:8084/mqtt",
     client: null,
     status: {
       connecting: false,
       connected: false
-    }
+    },
+    topic_sub: ["post", "post_foot", "inner_temp", "chill_temp", "test"]
   },
   methods: {
     setModelValue: function setModelValue(msgjson) {
@@ -154,20 +157,20 @@ var _default = (_onLaunch$onShow$onHi = {
       client.on("message", function (topic, message) {
         // message is Buffer
         var msgjson = JSON.parse(message.toString());
-        console.log(msgjson);
+        // console.log(msgjson)
         if (topic == 'post') _this.setModelValue(msgjson);
+        if (topic == 'post_foot') uni.$emit("updateFootView", msgjson);
         msgs.push({
           topic: topic,
           msg: message
         });
       });
-      client.subscribe('post', function (err) {
-        if (!err) {
-          uni.showToast({
-            title: "订阅成功！",
-            icon: "success"
+      getApp().globalData.topic_sub.forEach(function (value, index) {
+        client.subscribe(value, function (err) {
+          if (err) uni.showToast({
+            title: "订阅成功！"
           });
-        }
+        });
       });
     },
     createConnection: function createConnection() {

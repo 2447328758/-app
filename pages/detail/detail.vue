@@ -8,6 +8,9 @@
 		    :title='item.name' 
 		    :num='item.value' 
 		    :unit='item.unit'
+			:type='item.type'
+			:src='item.path'
+			:size='30'
 			@click="sendCmd(item.id,'value',item.name)"
 			/>
 			</view>

@@ -1,6 +1,7 @@
 {
-  "navigationBarTitleText": "画布",
+  "navigationBarTitleText": "压力分布图",
   "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#6b6882",
   "usingComponents": {
     "footpartial": "/components/footpartial/footpartial"
   }

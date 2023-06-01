@@ -24,6 +24,7 @@
 		onLoad(){
 			let that = this
 			uni.$on("updateFootView",(data)=>{
+				console.log(data)
 				that.$refs.footCanvas.update(data)
 			})
 		}

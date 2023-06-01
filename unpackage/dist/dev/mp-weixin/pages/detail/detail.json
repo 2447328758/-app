@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "物模型",
   "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#6b6882",
   "usingComponents": {
     "wm-list-add": "/components/wm-list-add/wm-list-add",
     "zai-lattice": "/components/zai-lattice/index"

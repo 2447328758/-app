@@ -30,14 +30,15 @@
 			},
 			//192.168.1.100
 			//192.168.*.156
+			// 120.26.95.127
 			// #ifdef H5
-			broker:"ws://192.168.37.156:8083/mqtt",
+			broker:"ws://192.168.1.100:8083/mqtt",
 			// #endif
 			// #ifdef APP-PLUS
-			broker:"wx://192.168.37.156:8083/mqtt",
+			broker:"wx://192.168.1.100:8083/mqtt",
 			// #endif
 			// #ifdef MP-WEIXIN
-			broker:"wss://192.168.37.156:8084/mqtt",
+			broker:"wss://192.168.1.100:8084/mqtt",
 			// #endif
 			
 			client:null,
@@ -74,10 +75,17 @@
 				client.on("message",
 					(topic, message) =>{
 					  // message is Buffer
-					  let msgjson=JSON.parse(message.toString())
-					  // console.log(msgjson)
-					  if(topic=='post')this.setModelValue(msgjson)
-					  if(topic=='post_foot')uni.$emit("updateFootView",msgjson)
+					  try{
+						  let msgjson=JSON.parse(message.toString())
+						  if(topic=='post')this.setModelValue(msgjson)
+						  if(topic=='post_foot'){
+								let a = {}
+								a[msgjson.id]=msgjson.value
+								uni.$emit("updateFootView",a)
+						  }
+					  }catch(err){
+						  console.log(`not a json msg:${message}:${err}`)
+					  }
 					  msgs.push({
 						  topic:topic,
 						  msg:message
@@ -99,10 +107,10 @@
 				globe.client.on("error",
 					(error) =>{
 					  uni.showToast({
-					  	title:"连接错误！"
+					  	title:"连接错误！"+error.message
 					  })
 					  globe.connecting=false
-					  console.log(error)
+					  // console.log(error)
 					}
 				)
 				globe.status.connecting=true;
