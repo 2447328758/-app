@@ -1,6 +1,10 @@
 <script>
-	import mqtt from 'mqtt/dist/mqtt.js'
+	import mqtt from 'mqtt'
 	import  {value_model,switch_model} from "model.js"
+	//192.168.1.100
+	//192.168.*.156
+	// 120.26.95.127
+	var ip = '120.26.95.127'
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
@@ -19,26 +23,25 @@
 				msg:"test_msg"
 			}],
 			options:{
-				keepalive:45,
 				clientId:"test_2",
 				clean:true,
 				connectTimeout:30000,
 				username:"test_2",
 				password:"123456",
-				keepalive:10
+				keepalive:60,
+				timeout:30
 				
 			},
-			//192.168.1.100
-			//192.168.*.156
-			// 120.26.95.127
+			
+			
 			// #ifdef H5
-			broker:"ws://192.168.1.100:8083/mqtt",
+			broker:"ws://"+ip+":8083/mqtt",
 			// #endif
 			// #ifdef APP-PLUS
-			broker:"wx://192.168.1.100:8083/mqtt",
+			broker:"wx://"+ip+":8083/mqtt",
 			// #endif
 			// #ifdef MP-WEIXIN
-			broker:"wss://192.168.1.100:8084/mqtt",
+			broker:"wxs://"+ip+":8084/mqtt",
 			// #endif
 			
 			client:null,
@@ -136,7 +139,6 @@
 		
 		onLaunch() {			
 			this.createConnection()
-			
 		},
 		destroyed() {
 			let client = getApp().globalData.client
