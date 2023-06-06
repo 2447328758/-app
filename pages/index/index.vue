@@ -1,11 +1,3 @@
-<!--
- * @Author: 戴东阳 2447328758@qq.com
- * @Date: 2023-05-17 17:51:19
- * @LastEditors: 戴东阳 2447328758@qq.com
- * @LastEditTime: 2023-06-06 15:44:44
- * @FilePath: \demo_2\pages\index\index.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
 	<view class="content">
 		<view class="header" :style="'top:'+top+'rpx'">
@@ -40,8 +32,9 @@
 		},
 		mounted() {
 			let windowinfo = uni.getWindowInfo()
-			// console.log(windowinfo)
-			this.top=750-windowinfo.screenHeight
+			console.log(windowinfo)
+			this.top=windowinfo.windowTop*2
+			
 		},
 		onLoad() {
 		
@@ -73,6 +66,9 @@
 			position: sticky;
 			width: 100%;
 			background-color: #ffffff;
+			box-sizing: border-box;
+			border: 1px solid #a66678;
+			padding: 5px;
 		}
 		.msg_box{
 			// margin-top: 40px;

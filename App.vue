@@ -1,10 +1,10 @@
 <script>
-	import mqtt from 'mqtt'
+	import mqtt from 'mqtt/dist/mqtt.js'
 	import  {value_model,switch_model} from "model.js"
 	//192.168.1.100
 	//192.168.*.156
 	// 120.26.95.127
-	var ip = '120.26.95.127'
+	var ip = "120.26.95.127"
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
@@ -28,9 +28,7 @@
 				connectTimeout:30000,
 				username:"test_2",
 				password:"123456",
-				keepalive:60,
-				timeout:30
-				
+				keepalive:60
 			},
 			
 			
@@ -38,10 +36,10 @@
 			broker:"ws://"+ip+":8083/mqtt",
 			// #endif
 			// #ifdef APP-PLUS
-			broker:"wx://"+ip+":8083/mqtt",
+			broker:"ws://"+ip+":8083/mqtt",
 			// #endif
 			// #ifdef MP-WEIXIN
-			broker:"wxs://"+ip+":8084/mqtt",
+			broker:"wx://"+ip+":8083/mqtt",
 			// #endif
 			
 			client:null,
@@ -105,15 +103,18 @@
 				})
 			},
 			createConnection(){
+				uni.showLoading({
+					title:"连接中..."
+				})
 				let globe = getApp().globalData
 				globe.client=mqtt.connect(globe.broker,globe.options)
 				globe.client.on("error",
 					(error) =>{
 					  uni.showToast({
-					  	title:"连接错误！"+error.message
+					  	title:"错误！"+error.message
 					  })
-					  globe.connecting=false
-					  // console.log(error)
+					  globe.status.connecting=false
+					  globe.status.connected=false
 					}
 				)
 				globe.status.connecting=true;
@@ -128,16 +129,26 @@
 						globe.status.connected=true;
 						globe.status.connecting=false;
 						this.onConnected()
-						
+						uni.hideLoading()
 					},
 					(err)=>{
 						console.log(err)
+						globe.status.connected=false
+						globe.status.connecting=false
+						uni.showToast({
+							title:"连接失败"+err,
+							icon:"error"
+						})
 					}
 				)
 			}
 		},
 		
 		onLaunch() {			
+			this.globalData.msgs = new Array(20).fill({
+				topic:"test_topic",
+				msg:"test_msg"
+			})
 			this.createConnection()
 		},
 		destroyed() {

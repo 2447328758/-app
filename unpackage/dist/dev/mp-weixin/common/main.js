@@ -15,7 +15,7 @@ var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/run
 __webpack_require__(/*! uni-pages */ 26);
 var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 27));
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 25));
-__webpack_require__(/*! ./uni.promisify.adaptor */ 33);
+__webpack_require__(/*! ./uni.promisify.adaptor */ 177);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 // @ts-ignore
@@ -39,7 +39,7 @@ createApp(app).$mount();
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App.vue?vue&type=script&lang=js& */ 28);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _D_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 32);
+/* harmony import */ var _D_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 176);
 var render, staticRenderFns, recyclableRender, components
 var renderjs
 
@@ -98,9 +98,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
-var _mqtt = _interopRequireDefault(__webpack_require__(/*! mqtt/dist/mqtt.js */ 30));
-var _model = __webpack_require__(/*! model.js */ 31);
+var _mqtt = _interopRequireDefault(__webpack_require__(/*! mqtt */ 30));
+var _model = __webpack_require__(/*! model.js */ 175);
 var _onLaunch$onShow$onHi;
+//192.168.1.100
+//192.168.*.156
+// 120.26.95.127
+var ip = "120.26.95.127";
 var _default = (_onLaunch$onShow$onHi = {
   onLaunch: function onLaunch() {
     console.log('App Launch');
@@ -118,18 +122,15 @@ var _default = (_onLaunch$onShow$onHi = {
       topic: "test_topic",
       msg: "test_msg"
     }],
-    options: (0, _defineProperty2.default)({
-      keepalive: 45,
+    options: {
       clientId: "test_2",
       clean: true,
       connectTimeout: 30000,
       username: "test_2",
-      password: "123456"
-    }, "keepalive", 10),
-    //192.168.1.100
-    //192.168.*.156
-
-    broker: "wss://192.168.37.156:8084/mqtt",
+      password: "123456",
+      keepalive: 60
+    },
+    broker: "wx://" + ip + ":8083/mqtt",
     client: null,
     status: {
       connecting: false,
@@ -156,10 +157,17 @@ var _default = (_onLaunch$onShow$onHi = {
       var msgs = getApp().globalData.msgs;
       client.on("message", function (topic, message) {
         // message is Buffer
-        var msgjson = JSON.parse(message.toString());
-        // console.log(msgjson)
-        if (topic == 'post') _this.setModelValue(msgjson);
-        if (topic == 'post_foot') uni.$emit("updateFootView", msgjson);
+        try {
+          var msgjson = JSON.parse(message.toString());
+          if (topic == 'post') _this.setModelValue(msgjson);
+          if (topic == 'post_foot') {
+            var a = {};
+            a[msgjson.id] = msgjson.value;
+            uni.$emit("updateFootView", a);
+          }
+        } catch (err) {
+          console.log("not a json msg:".concat(message, ":").concat(err));
+        }
         msgs.push({
           topic: topic,
           msg: message
@@ -175,14 +183,17 @@ var _default = (_onLaunch$onShow$onHi = {
     },
     createConnection: function createConnection() {
       var _this2 = this;
+      uni.showLoading({
+        title: "连接中..."
+      });
       var globe = getApp().globalData;
       globe.client = _mqtt.default.connect(globe.broker, globe.options);
       globe.client.on("error", function (error) {
         uni.showToast({
-          title: "连接错误！"
+          title: "错误！" + error.message
         });
-        globe.connecting = false;
-        console.log(error);
+        globe.status.connecting = false;
+        globe.status.connected = false;
       });
       globe.status.connecting = true;
       globe.client.on("connect", function (res) {
@@ -195,12 +206,23 @@ var _default = (_onLaunch$onShow$onHi = {
         globe.status.connected = true;
         globe.status.connecting = false;
         _this2.onConnected();
+        uni.hideLoading();
       }, function (err) {
         console.log(err);
+        globe.status.connected = false;
+        globe.status.connecting = false;
+        uni.showToast({
+          title: "连接失败" + err,
+          icon: "error"
+        });
       });
     }
   }
 }, (0, _defineProperty2.default)(_onLaunch$onShow$onHi, "onLaunch", function onLaunch() {
+  this.globalData.msgs = new Array(20).fill({
+    topic: "test_topic",
+    msg: "test_msg"
+  });
   this.createConnection();
 }), (0, _defineProperty2.default)(_onLaunch$onShow$onHi, "destroyed", function destroyed() {
   var client = getApp().globalData.client;

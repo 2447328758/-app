@@ -26,6 +26,17 @@
 /* 文章场景相关 */
 .content {
   padding: 10rpx;
+  padding-top: 0px;
+}
+.content .header {
+  display: block;
+  position: -webkit-sticky;
+  position: sticky;
+  width: 100%;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border: 1px solid #a66678;
+  padding: 5px;
 }
 .content .msg_box {
   border: 1px solid #afa178;

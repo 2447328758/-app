@@ -26,7 +26,10 @@
             },
             /* ios打包配置 */
             "ios" : {
-                "dSYMs" : false
+                "dSYMs" : false,
+                "privacyDescription" : {
+                    "NSPhotoLibraryUsageDescription" : ""
+                }
             },
             /* SDK配置 */
             "sdkConfigs" : {
