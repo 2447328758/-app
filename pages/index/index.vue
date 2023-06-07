@@ -32,7 +32,6 @@
 		},
 		mounted() {
 			let windowinfo = uni.getWindowInfo()
-			console.log(windowinfo)
 			this.top=windowinfo.windowTop*2
 			
 		},
@@ -51,7 +50,6 @@
 			msgs(val,oldval){
 				if(val.length>20)
 					this.msgs.shift()
-					// console.log(this.msgs.length)
 			}
 		}
 	}

@@ -36,7 +36,7 @@
 			broker:"ws://"+ip+":8083/mqtt",
 			// #endif
 			// #ifdef APP-PLUS
-			broker:"ws://"+ip+":8083/mqtt",
+			broker:"wx://"+ip+":8083/mqtt",
 			// #endif
 			// #ifdef MP-WEIXIN
 			broker:"wx://"+ip+":8083/mqtt",
@@ -53,7 +53,15 @@
 				"inner_temp",
 				"chill_temp",
 				"test"
-			]
+			],
+			opt_influxdb:{
+				url:`http://${ip}:8086`,
+				org:"cgqgzs",
+				bucket:"foot",
+				_measurement:"data",
+				_field:"value",
+				token:"bRGdoe6kKmbZvI1gpLiDzAzpy-q6QzQeFnWizc7E09yW9YbSX0xuQqMV_NR97zR3GIGBnbk-zQkpiSdAbLjHeA=="
+			}
 		},
 		methods:{
 			setModelValue(msgjson){
