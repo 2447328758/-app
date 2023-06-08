@@ -143,7 +143,7 @@ export default {
 				const grd = this.context.createCircularGradient(x, y, 5)
 				grd.addColorStop(0, 'red')
 				grd.addColorStop(0.5, 'green')
-				grd.addColorStop(1, 'blue')
+				grd.addColorStop(1, 'rgba(0,0,0,0)')
 				
 				// Fill with gradient
 				this.context.setFillStyle(grd)
