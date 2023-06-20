@@ -5,6 +5,8 @@
 	//192.168.*.156
 	// 120.26.95.127
 	var ip = "120.26.95.127"
+	var data_queue={}
+	var len = 0
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
@@ -23,10 +25,10 @@
 				msg:"test_msg"
 			}],
 			options:{
-				clientId:"test_2",
+				clientId:"test_55",
 				clean:true,
 				connectTimeout:30000,
-				username:"test_2",
+				username:"test_63",
 				password:"123456",
 				keepalive:60
 			},
@@ -88,9 +90,13 @@
 						  let msgjson=JSON.parse(message.toString())
 						  if(topic=='post')this.setModelValue(msgjson)
 						  if(topic=='post_foot'){
-								let a = {}
-								a[msgjson.id]=msgjson.value
-								uni.$emit("updateFootView",a)
+								data_queue[msgjson.id]=msgjson.value
+								len++
+								if(len>36){
+									uni.$emit("updateFootView",data_queue)
+									data_queue={}
+									len=0
+								}
 						  }
 					  }catch(err){
 						  console.log(`not a json msg:${message}:${err}`)

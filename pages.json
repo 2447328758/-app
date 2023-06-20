@@ -10,16 +10,6 @@
 				"navigationBarBackgroundColor": "#6b6882"
 			}
 		}
-	    ,{
-            "path" : "pages/detail/detail",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "物模型",
-                "enablePullDownRefresh": false,
-				"navigationBarBackgroundColor": "#6b6882"
-            }
-            
-        }
 		,{
 		    "path" : "pages/canvas/canvas",
 		    "style" :                                                                                    
@@ -30,16 +20,6 @@
 		    }
 		    
 		}
-        ,{
-            "path" : "pages/addModel/addModel",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "添加模型数据",
-                "enablePullDownRefresh": false,
-				"navigationBarBackgroundColor": "#6b6882"
-            }
-            
-        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -70,16 +50,6 @@
 				"iconfont": {
 					"text": "\ue763",
 					"selectedText": "\ue763",
-					"color": "#6b6882",
-					"selectedColor": "#aaaaaa"
-				}
-			},
-			{
-				"pagePath": "pages/detail/detail",
-				"text": "物模型",
-				"iconfont": {
-					"text": "\uec33",
-					"selectedText": "\uec33",
 					"color": "#6b6882",
 					"selectedColor": "#aaaaaa"
 				}

@@ -65,6 +65,9 @@ from(bucket: "${bucket}")
 						// 	this.addData(o,senser_id)
 						// 	uni.$emit("log","get ont"+JSON.stringify(o))
 						// }
+						uni.showLoading({
+							title:"查询中..."
+						})
 						let res = await uni.request({
 							method:"POST",
 							url:`${this.url}/api/v2/query?org=${this.org}`,
@@ -77,7 +80,11 @@ from(bucket: "${bucket}")
 								query:fluxQuery,
 								type:"flux"
 							},
-							timeout:1000
+							timeout:5000
+						})
+						uni.hideLoading()
+						uni.showToast({
+							title:"查询成功！",
 						})
 						let data = []
 						let d = res.data.split("\r\n")
@@ -99,7 +106,12 @@ from(bucket: "${bucket}")
 						uni.$emit("log","influx_query.query async ended")
 					}catch(err){
 						uni.$emit("log","influx_query.query async err:")
-						uni.$emit("log",err)
+						uni.$emit("log",JSON.stringify(err))
+						uni.hideLoading()
+						uni.showToast({
+							title:"查询失败！",
+							icon:"error"
+						})
 					}
 				})
 				uni.$emit("log","influx_query.query ending")
@@ -118,7 +130,7 @@ from(bucket: "${bucket}")
 			let time = item._time
 			let id = item.id
 			if(senser_id && id != String(senser_id))return
-			let value = item._value
+			let value = item._value.toFixed(2)
 			let date = new Date(time).toTimeString().substring(0,8)
 			if(!categories.find(ele => ele === date))categories.push(date)
 			if(!series.find(ele => ele.name == id))series.push({name:id,data:[]})
