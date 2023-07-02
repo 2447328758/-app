@@ -4,6 +4,15 @@
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+		    "path" : "pages/indexpage/indexpage",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "首页",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		,{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "连接信息",
@@ -20,6 +29,16 @@
 		    }
 		    
 		}
+        ,{
+            "path" : "pages/devices/devices",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "设备绑定",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -45,21 +64,41 @@
 		"selectedColor": "#aaaaaa",
 		"list": [
 			{
+				"pagePath": "pages/indexpage/indexpage",
+				"text": "首页",
+				"iconfont": {
+					"text": "\ue619",
+					"selectedText": "\ue619",
+					"color": "#6b6882",
+					"selectedColor": "#aaaaaa"
+				}
+			},
+			{
 				"pagePath": "pages/index/index",
 				"text": "连接信息",
 				"iconfont": {
-					"text": "\ue763",
-					"selectedText": "\ue763",
+					"text": "\ue711",
+					"selectedText": "\ue711",
 					"color": "#6b6882",
 					"selectedColor": "#aaaaaa"
 				}
 			},
 			{
 				"pagePath": "pages/canvas/canvas",
-				"text": "画布",
+				"text": "可视化展示",
 				"iconfont": {
-					"text": "\ue61f",
-					"selectedText": "\ue61f",
+					"text": "\ue630",
+					"selectedText": "\ue630",
+					"color": "#6b6882",
+					"selectedColor": "#aaaaaa"
+				}
+			},
+			{
+				"pagePath": "pages/devices/devices",
+				"text": "设备绑定",
+				"iconfont": {
+					"text": "\uebb7",
+					"selectedText": "\uebb7",
 					"color": "#6b6882",
 					"selectedColor": "#aaaaaa"
 				}

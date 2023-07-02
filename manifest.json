@@ -1,5 +1,5 @@
 {
-    "name" : "demo_2",
+    "name" : "智能鞋垫",
     "appid" : "__UNI__AAF4A59",
     "description" : "",
     "versionName" : "1.0.0",
@@ -38,9 +38,9 @@
             "splashscreen" : {
                 "androidStyle" : "default",
                 "android" : {
-                    "hdpi" : "D:/作业/splash.png",
-                    "xhdpi" : "D:/作业/splash.png",
-                    "xxhdpi" : "D:/作业/splash.png"
+                    "hdpi" : "F:/鞋垫/pics/splash.png",
+                    "xhdpi" : "F:/鞋垫/pics/splash.png",
+                    "xxhdpi" : "F:/鞋垫/pics/splash.png"
                 }
             },
             "icons" : {

@@ -1,5 +1,6 @@
 <template>
 	<view class="content">
+		<bgImg></bgImg>
 		<view class="header" :style="'top:'+top+'rpx'">
 			<button size="mini" @click="clear()">清空</button>
 			<text>连接状态：{{status.connected?"已连接":"未连接"}}</text>

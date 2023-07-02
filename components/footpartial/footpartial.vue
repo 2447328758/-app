@@ -129,6 +129,7 @@ export default {
 		choose_partial(e,show_click_point){
 			// console.log(e)
 			let {x,y} = e.detail
+			y-=56
 			x+=this.pageScrollx
 			y+=this.pageScrolly
 			x/=this.rate

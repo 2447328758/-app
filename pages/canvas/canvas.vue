@@ -1,25 +1,40 @@
 <template>
 	<view class="content">
-		<footpartial @footClicked="onFootClicked" ref="footCanvas" :pageScrollx="pageScrollx" :pageScrolly="pageScrolly"></footpartial>
-		<view class="chart_title">
-			<text>{{foot_choosed==null?"":"传感器id:"+foot_choosed.id}}</text>
+		<bgImg></bgImg>
+		<view class="chart_title keji">
+			<text class="badge-info badge" style="font-size: 25px;">可视化</text>
 		</view>
-		<scroll-view>
-			<qiun-data-charts
+		<footpartial @footClicked="onFootClicked" ref="footCanvas" :pageScrollx="pageScrollx" :pageScrolly="pageScrolly"></footpartial>
+		<view class="chart_title keji">
+			<text class="badge-info badge" style="font-size: 25px;">数据曲线</text>
+			<text>{{foot_choosed==null?"":"传感器id:"+foot_choosed.id}}</text>
+			<view class="u-notice-bar keji" :style="{display:show_nothing?'block':'none',fontSize:'16px',color:'orange'}">
+				没有数据
+			</view>
+		</view>
+s			<qiun-data-charts
 			v-if="show_chart"
 			type="line"
 			:opts="opts"
 			:chartData="chartData"
 			/>
-		</scroll-view>
-		
-		<view class="u-notice-bar" :style="{display:show_nothing?'block':'none'}">
-			没有数据
+		<view class="log keji">
+			<text class="badge-info badge" style="font-size: 25px;">参考结果</text>
+			<view class="judge one">
+				<text class="badge badge-dark">左脚</text>
+				<br/>
+				<text class="advice">{{judge?judge.left.advices:"无建议"}}</text>
+			</view>
+			<view class="judge one">
+				<text class="badge badge-dark">右脚</text>
+				<br/>
+				<text class="advice">{{judge?judge.right.advices:"无建议"}}</text>
+			</view>
 		</view>
-		<view class="log">
+		<!-- <view class="log">
 			<u-button @click="log=''" size="mini">清空</u-button>
 			<textarea  cols="30" rows="10" placeholder="日志" style="width: 100%;" :value="log"></textarea>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -42,7 +57,8 @@
 				opts: {
 					color: ["#1890FF","#91CB74","#FAC858","#EE6666","#73C0DE","#3CA272","#FC8452","#9A60B4","#ea7ccc"],
 					padding: [15,10,0,15],
-					// enableScroll: true,
+					enableScroll: true,
+					width:5000,
 					legend: {},
 					xAxis: {
 					  disableGrid: true,
@@ -68,8 +84,9 @@
 				log:"",
 				pageScrollx:0,
 				pageScrolly:0,
-				show_nothing:false,
-				choose_only:true//是否只显示选定的
+				show_nothing:true,
+				choose_only:true,//是否只显示选定的
+				judge:null
 			}
 		},
 		methods: {
@@ -77,12 +94,14 @@
 				this.chartData.categories.splice(0)
 				this.chartData.series.splice(0)
 				this.show_chart=true
+				this.show_nothing=false
 				this.foot_choosed=foot
 				this.getServerData(this.choose_only)
 			},
 			getServerData(choose_only=false) {
 				uni.$emit("log","正在查询数据库")
-				let client_id="aicao1"
+				let client_id=getApp().globalData.deviceid
+				console.log(client_id)
 				let res=undefined
 				let id = undefined
 				
@@ -106,7 +125,10 @@
 		onLoad(){
 			let that = this
 			uni.$on("updateFootView",(data)=>{
+				
 				that.$refs.footCanvas.update(data)
+				this.judge=getApp().globalData.judges
+				console.log(this.judge)
 			})
 			const opt = opt_influx
 			this.influx_query=new InfluxQuery(opt.url, opt.token, opt.org, opt.bucket)
@@ -115,16 +137,23 @@
 		},
 		onPageScroll(e) {
 			if(e.scrollTop)this.pageScrolly=e.scrollTop
-			// console.log(e.scrollTop)
 		}
 	}
 </script>
 
 <style>
+@font-face {
+	font-family: "maobizi";
+	src: url(../../static/font/ZhengQingKeLengKuTi-2.ttf);
+}
+.keji{
+	font-family: maobizi;
+}
 .chart_title{
 	margin: auto;
 	text-align: center;
 	font-size: 25px;
+	margin: 20rpx;
 }
 .log{
 	margin: 5px;
@@ -136,4 +165,12 @@
 .u-notice-bar{
 	text-align: center;
 }
+.judge{
+	font-size: 24px;
+}
+.advice{
+	font-size: 18px;
+	color: orange;
+}
+
 </style>
