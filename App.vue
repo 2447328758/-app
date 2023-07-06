@@ -39,7 +39,7 @@
 			console.log('App Hide')
 		},
 		globalData:{
-			deviceid:"",
+			deviceid:"123",
 			msgs:[{
 				topic:"test_topic",
 				msg:"test_msg"
@@ -108,6 +108,8 @@
 									data_queue={}
 									len=0
 								}
+						  }else if(topic=='post/foot/'+this.globalData.deviceid+'/extraData'){
+							uni.$emit("extraDataRecieved",msgjson)
 						  }
 					  }catch(err){
 						  console.log(`not a json msg:${message}:${err}`)
@@ -126,6 +128,8 @@
 							})
 					})
 				})
+				getApp().globalData.client.subscribe("post/foot/"+this.deviceid)
+				getApp().globalData.client.subscribe("post/foot/"+this.deviceid+"/#")
 			},
 			createConnection(){
 				uni.showLoading({

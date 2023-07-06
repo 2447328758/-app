@@ -129,7 +129,8 @@ from(bucket: "${bucket}")
 			const series = this.data.series
 			let time = item._time
 			let id = item.id
-			if(senser_id && id != String(senser_id))return
+			// console.log(id,senser_id,id in senser_id)
+			if(senser_id && senser_id.filter((e)=>e==id)==0)return
 			let value = item._value.toFixed(2)
 			let date = new Date(time).toTimeString().substring(0,8)
 			if(!categories.find(ele => ele === date))categories.push(date)

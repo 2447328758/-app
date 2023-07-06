@@ -94,6 +94,7 @@ export default {
 			imageHeight:370,
 			canvasWidth:1000,
 			canvasHeight:1000,
+			canvasInfo:0
 		}
 	},
 	mounted: async function () {
@@ -108,8 +109,18 @@ export default {
 			this.foot[i]=new FootPartial(x,y,min,max,value,path,startPos,color,width,height,id,startTag)
 		}
 		this.update({})
+		let r = await this.getOffsetX()
+		this.canvasInfo = r
+		// console.log(this.canvasInfo)
+		// console.log((this.windowWidth-this.imageWidth*this.rate)/2)
 	},
 	methods: {
+		async getOffsetX(){
+			let selectQuery = uni.createSelectorQuery();
+			let r = null
+			selectQuery.select("#firstCanvas").boundingClientRect((result)=>{r=result}).exec()
+			return r
+		},
 		update(data,update=true){//key 和 value 是Number类型，是一个对象
 			this.data = data
 			let rate = this.rate
@@ -129,12 +140,13 @@ export default {
 		choose_partial(e,show_click_point){
 			// console.log(e)
 			let {x,y} = e.detail
-			y-=56
+			y-=65
 			x+=this.pageScrollx
 			y+=this.pageScrolly
+			x-=(this.windowWidth-this.imageWidth*this.rate)/2
 			x/=this.rate
 			y/=this.rate
-			// console.log(x,y)
+			console.log(x,y)
 			
 			// console.log(this.pageScrolly)
 			// console.log(x,y)
@@ -178,6 +190,7 @@ export default {
 	canvas {
 		box-sizing: border-box;
 		// border: 2px solid black;
+		margin: auto;
 	}
 }
 

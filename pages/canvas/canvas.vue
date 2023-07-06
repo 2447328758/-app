@@ -4,20 +4,45 @@
 		<view class="chart_title keji">
 			<text class="badge-info badge" style="font-size: 25px;">可视化</text>
 		</view>
-		<footpartial @footClicked="onFootClicked" ref="footCanvas" :pageScrollx="pageScrollx" :pageScrolly="pageScrolly"></footpartial>
-		<view class="chart_title keji">
-			<text class="badge-info badge" style="font-size: 25px;">数据曲线</text>
-			<text>{{foot_choosed==null?"":"传感器id:"+foot_choosed.id}}</text>
-			<view class="u-notice-bar keji" :style="{display:show_nothing?'block':'none',fontSize:'16px',color:'orange'}">
-				没有数据
+		<!-- 鞋垫 -->
+		<view class="xiedian">
+			<footpartial @footClicked="onFootClicked" ref="footCanvas" :pageScrollx="pageScrollx" :pageScrolly="pageScrolly"></footpartial>
+			<view class="extraData keji" style="font-size: 14px;">
+				<text class="extraData item">左脚压力平均值：{{extraData.left}}</text>
+				<text class="extraData item">左右脚平均压力差：{{extraData.delta}}</text>
+				<text class="extraData item">右脚压力平均值：{{extraData.right}}</text>
 			</view>
 		</view>
-s			<qiun-data-charts
+		<view class="chart_title keji">
+			<text class="badge-info badge" style="font-size: 25px;">数据曲线</text>
+			<view class="queryMode">
+				<view class="btn-group-sm">
+					<button class="btn btn-outline-primary" @click="queryMode.time='-1d';queryMode.interval='5m';getServerData();">一天内</button>
+					<button class="btn btn-outline-primary" @click="queryMode.time='-30m';queryMode.interval='40s';getServerData();">30分钟内</button>
+					<button class="btn btn-outline-primary" @click="queryMode.ids=[];  queryMode.ids=['left','right','delta'] ;getServerData();">额外数据</button>
+				</view>
+			</view>
+		</view>
+		<!-- 压力值图表 -->
+		<view class="chart">
+			<view class="chart_title keji">
+				<text>------压力值------</text>
+				<br/>
+				<text style="font-size: 15px;">{{foot_choosed==null?"":"传感器id:"+foot_choosed.id}}</text>
+				<view class="u-notice-bar keji badge-danger" :style="{display:show_nothing?'block':'none',fontSize:'16px',color:'orange'}">
+					没有数据
+				</view>
+			</view>
+			<qiun-data-charts
 			v-if="show_chart"
 			type="line"
 			:opts="opts"
 			:chartData="chartData"
+			:ontouch="true"
 			/>
+		</view>
+
+		
 		<view class="log keji">
 			<text class="badge-info badge" style="font-size: 25px;">参考结果</text>
 			<view class="judge one">
@@ -48,15 +73,23 @@ s			<qiun-data-charts
 		components:{footpartial},
 		data() {
 			return {
+				/**
+				 * 
+				 * 压力值的数据
+				 * 
+				 * 
+				 */
 				chartData: {
 							categories: [],
 							series: [],
 						},
 				show_chart:false,
+				
 				//您可以通过修改 config-ucharts.js 文件中下标为 ['line'] 的节点来配置全局默认参数，如都是默认参数，此处可以不传 opts 。实际应用过程中 opts 只需传入与全局默认参数中不一致的【某一个属性】即可实现同类型的图表显示不同的样式，达到页面简洁的需求。
 				opts: {
 					color: ["#1890FF","#91CB74","#FAC858","#EE6666","#73C0DE","#3CA272","#FC8452","#9A60B4","#ea7ccc"],
 					padding: [15,10,0,15],
+					dataLabel:false,
 					enableScroll: true,
 					width:5000,
 					legend: {},
@@ -86,27 +119,42 @@ s			<qiun-data-charts
 				pageScrolly:0,
 				show_nothing:true,
 				choose_only:true,//是否只显示选定的
-				judge:null
+				judge:null,
+				timer:null,
+				queryMode:{
+					time:"-30m",
+					interval:"30s",
+					ids:[]
+				},
+				extraData:{
+					left:0,
+					right:0,
+					delta:0
+				}
 			}
 		},
 		methods: {
 			onFootClicked(foot){
-				this.chartData.categories.splice(0)
-				this.chartData.series.splice(0)
 				this.show_chart=true
 				this.show_nothing=false
 				this.foot_choosed=foot
-				this.getServerData(this.choose_only)
+				this.queryMode.ids=[this.foot_choosed.id]
+				this.getServerData()
 			},
-			getServerData(choose_only=false) {
+			getServerData() {
+				this.chartData.categories.splice(0)
+				this.chartData.series.splice(0)
 				uni.$emit("log","正在查询数据库")
 				let client_id=getApp().globalData.deviceid
-				console.log(client_id)
+				// console.log(client_id)
 				let res=undefined
-				let id = undefined
+				let id = this.queryMode.ids
+				let time = this.queryMode.time
+				let interval = this.queryMode.interval
 				
-				if(choose_only)id = this.foot_choosed.id
-				this.influx_query.query(client_id,"-10m","30s",id)
+				// console.log(id)
+
+				this.influx_query.query(client_id,time,interval,id)
 				.then((res)=>{
 					uni.$emit("log","收到influxdb："+JSON.stringify(res))
 					this.chartData=res
@@ -120,7 +168,9 @@ s			<qiun-data-charts
 					uni.$emit("log","query err!")
 					uni.$emit("log","查询结束")
 				})				
-			}
+				console.log("查询结束！")
+				// console.log(this.chartData)
+			},
 		},
 		onLoad(){
 			let that = this
@@ -128,15 +178,26 @@ s			<qiun-data-charts
 				
 				that.$refs.footCanvas.update(data)
 				this.judge=getApp().globalData.judges
-				console.log(this.judge)
+				// console.log(this.judge)
 			})
 			const opt = opt_influx
 			this.influx_query=new InfluxQuery(opt.url, opt.token, opt.org, opt.bucket)
 			uni.$on("log",(log)=>this.log+=log+"\n")
 			// uni.$emit("log",this.influx_query.query)
+			
+			uni.$on("extraDataRecieved",(data)=>{
+				this.extraData[data.id]=data.value
+			})
 		},
 		onPageScroll(e) {
 			if(e.scrollTop)this.pageScrolly=e.scrollTop
+		},
+		onShow(){
+			this.timer=setInterval(()=>{this.getServerData(this.choose_only)},30*1000)
+		},
+		onHide(){
+			clearInterval(this.timer)
+			this.timer=null
 		}
 	}
 </script>
@@ -145,6 +206,9 @@ s			<qiun-data-charts
 @font-face {
 	font-family: "maobizi";
 	src: url(../../static/font/ZhengQingKeLengKuTi-2.ttf);
+}
+.content{
+	padding: 5px;
 }
 .keji{
 	font-family: maobizi;
@@ -171,6 +235,24 @@ s			<qiun-data-charts
 .advice{
 	font-size: 18px;
 	color: orange;
+}
+.chart{
+	margin: 5px;
+	border: 1px solid blue;
+	border-radius: 30px;
+}
+.extraData{
+	display: flex;
+	align-content: space-between;
+}
+
+.extraData .item{
+	display: inline;
+	flex: 1;
+	font-size: 40rpx;
+	text-align: center;
+	border: 1px solid darkblue;
+	margin: 2px;
 }
 
 </style>
