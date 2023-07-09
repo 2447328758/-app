@@ -13,7 +13,9 @@
 				<text class="extraData item">右脚压力平均值：{{extraData.right}}</text>
 			</view>
 		</view>
-		<view class="chart_title keji">
+		
+		<!-- 查询模式 -->
+		<!-- <view class="chart_title keji">
 			<text class="badge-info badge" style="font-size: 25px;">数据曲线</text>
 			<view class="queryMode">
 				<view class="btn-group-sm">
@@ -22,7 +24,9 @@
 					<button class="btn btn-outline-primary" @click="queryMode.ids=[];  queryMode.ids=['left','right','delta'] ;getServerData();">额外数据</button>
 				</view>
 			</view>
-		</view>
+		</view> -->
+		
+		
 		<!-- 压力值图表 -->
 		<view class="chart">
 			<view class="chart_title keji">
@@ -66,7 +70,7 @@
 <script>
 	const opt_influx = getApp().globalData.opt_influxdb
 	import footpartial from "@/components/footpartial/footpartial.vue"
-	import {InfluxQuery} from "./influx_query.js"
+	import {InfluxQuery} from "../../unijs/influx_query.js"
 	export default {
 		onReady(){
 		},
@@ -193,7 +197,7 @@
 			if(e.scrollTop)this.pageScrolly=e.scrollTop
 		},
 		onShow(){
-			this.timer=setInterval(()=>{this.getServerData(this.choose_only)},30*1000)
+			this.timer=setInterval(()=>{this.getServerData(this.choose_only)},60*1000)
 		},
 		onHide(){
 			clearInterval(this.timer)
@@ -239,7 +243,7 @@
 .chart{
 	margin: 5px;
 	border: 1px solid blue;
-	border-radius: 30px;
+	border-radius: 10px;
 }
 .extraData{
 	display: flex;

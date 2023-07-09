@@ -1,6 +1,6 @@
 <template>
 	<view class="out">
-		<image class="icon" :src="icon"></image>
+		<image v-if="icon" class="icon" :src="icon"></image>
 		<view class="text"><slot></slot></view>
 	</view>
 </template>

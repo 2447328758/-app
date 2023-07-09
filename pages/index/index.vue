@@ -1,21 +1,32 @@
 <template>
 	<view class="content">
 		<bgImg></bgImg>
-		<view class="header" :style="'top:'+top+'rpx'">
-			<button size="mini" @click="clear()">清空</button>
-			<text>连接状态：{{status.connected?"已连接":"未连接"}}</text>
-			{{broker}}
-		</view>
-		
-		<view class="msg_box">
-			<view v-for="item in msgs" class="msg_item">
-				<view class="topic">
-					{{item.topic}}
-				</view>
-				<view class="msg">
-					{{item.msg}}
+		<view class="mainContainer">
+			<view class="header title box" :style="'top:'+top+'rpx'">
+				<!-- <button size="mini" @click="clear()">清空</button> -->
+				<text>连接状态：{{status.connected?"已连接":"未连接"}}</text>
+				<view class="title">服务器信息：{{broker}}</view>
+				<!-- {{broker}} -->
+				<!-- <button size="mini" @click="refresh()">刷新</button> -->
+			</view>
+			
+			
+			<view class="msg_box">
+				<view v-for="item in msgs" class="msg_item">
+					<view class="topic">
+						{{item.topic}}
+					</view>
+					<view class="msg">
+						{{item.msg}}
+					</view>
 				</view>
 			</view>
+		</view>
+		
+		<view class="bottom box">
+			<button class="btn btn-primary flex-2" @click="clear()">清空</button>
+			<!-- <text>连接状态：{{status.connected?"已连接":"未连接"}}</text> -->
+			<button class="btn btn-warning flex-2" @click="refresh()">刷新</button>
 		</view>
 	</view>
 </template>
@@ -41,6 +52,17 @@
 		methods: {
 			clear(){
 				getApp().globalData.msgs.splice(0)
+			},
+			refresh(){
+				if(getApp().globalData.msg_recieved){
+					uni.showToast({
+						title:"刷新成功！"
+					})
+				}else{
+					uni.showToast({
+						title:"没有数据！"
+					})
+				}
 			}
 		},
 		computed:{
@@ -57,16 +79,38 @@
 
 <style lang="scss">
 	.content{
-		padding: 10rpx;
-		padding-top: 0px;
+		.mainContainer{
+			padding: 10rpx;
+			padding-top: 0px;
+		}
+		.box{
+			width: 100%;
+			padding: 5px;
+			
+		}
 		.header{
 			display: block;
-			position: sticky;
-			width: 100%;
-			background-color: #ffffff;
-			box-sizing: border-box;
 			border: 1px solid #a66678;
-			padding: 5px;
+			box-sizing: border-box;
+			position: sticky;
+			background-color: #ffffff;
+		}
+		.title{
+			font-size: 20px;
+			font-weight: 600;
+			text-shadow: #afaf11 3px 3px 2px;
+		}
+		.bottom{
+			display: flex;
+			box-sizing: border-box;
+			position: fixed;
+			bottom:0;
+			.flex-1{
+				flex: 1;
+			}
+			.flex-2{
+				flex: 2;
+			}
 		}
 		.msg_box{
 			// margin-top: 40px;

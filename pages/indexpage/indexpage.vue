@@ -2,15 +2,17 @@
 	<view class="">
 		<view class="content">
 			<bgImg></bgImg>
+			
 			<view class="title">
-				<h1>智能鞋垫辅助系统</h1>
+				<h2>骨关节病辅助检查系统</h2>
+				<view class="line"></view>
 			</view>
-			<view class="line"></view>
+			
 			<scroll-view scroll-y class="btns">
-				<menuItem :icon="'../../static/icon/info.png'" @click.native="clicked('devices')">设备绑定</menuItem>
-				<menuItem :icon="'../../static/icon/temp.png'" @click.native="clicked('canvas')">鞋垫可视化</menuItem>
-				<menuItem :icon="'../../static/icon/smoke.png'" @click.native="clicked('canvas')">时间曲线</menuItem>
-				<menuItem :icon="'../../static/icon/chart.png'" @click.native="clicked('index')">debug</menuItem>
+				<menuItem class="menuItem"  @click.native="clicked('devices')">用户信息</menuItem>
+				<menuItem class="menuItem"  @click.native="clicked('canvas')">足底压力分布图</menuItem>
+				<menuItem class="menuItem"  @click.native="clicked('chart')">足底压力统计曲线</menuItem>
+				<menuItem class="menuItem"  @click.native="clicked('index')">debug</menuItem>
 			</scroll-view>
 		</view>
 	</view>
@@ -18,7 +20,10 @@
 
 <script>
 	function navagateTo(url){
-		uni.switchTab({
+		// uni.switchTab({
+		// 	url:url
+		// })
+		uni.navigateTo({
 			url:url
 		})
 	}
@@ -49,14 +54,16 @@
 	align-items: center;
 	justify-content: center;
 	.title{
-		margin-top: 200rpx;
+		margin-top:150rpx;
+		margin-bottom: 30rpx;
 		font-family: maobizi;
 		opacity: 0.85;
 		color: #3d3b8f;
 	}
 	.line{
-		width: 70%;
+		width: 80%;
 		border: 1px solid #3d3b6f;
+		margin: auto;
 	}
 	.btns{
 		margin-top: 60rpx;
@@ -68,6 +75,10 @@
 		border: 2px solid rgba(0,0,0,0.6);
 		border-radius: 30rpx;
 		background-color: rgba(200, 200, 200, 0.3);
+	}
+	.menuItem{
+		width: 95%;
+		height: 50px
 	}
 }
 </style>

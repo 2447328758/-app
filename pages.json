@@ -8,14 +8,20 @@
 		    "style" :                                                                                    
 		    {
 		        "navigationBarTitleText": "首页",
-		        "enablePullDownRefresh": false
+		        "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#6b6882",
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				}
 		    }
 		    
 		}
 		,{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "连接信息",
+				"navigationBarTitleText": "数据观测",
 				"navigationBarBackgroundColor": "#6b6882"
 			}
 		}
@@ -23,7 +29,7 @@
 		    "path" : "pages/canvas/canvas",
 		    "style" :                                                                                    
 		    {
-		        "navigationBarTitleText": "压力分布图",
+		        "navigationBarTitleText": "足底压力状态分布图",
 		        "enablePullDownRefresh": false,
 				"navigationBarBackgroundColor": "#6b6882"
 		    }
@@ -33,12 +39,23 @@
             "path" : "pages/devices/devices",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "设备绑定",
-                "enablePullDownRefresh": false
+                "navigationBarTitleText": "用户信息",
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#6b6882"
             }
             
         }
         
+        ,{
+            "path" : "pages/chart/chart",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "足底压力统计曲线",
+                "enablePullDownRefresh": false,
+                "navigationBarBackgroundColor": "#6b6882"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -56,53 +73,54 @@
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]
-	},
-	"tabBar": {
-		"iconfontSrc": "static/iconfont/iconfont.ttf",
-		"backgroundColor": "#3d3b4f",
-		"color": "#6b6882",
-		"selectedColor": "#aaaaaa",
-		"list": [
-			{
-				"pagePath": "pages/indexpage/indexpage",
-				"text": "首页",
-				"iconfont": {
-					"text": "\ue619",
-					"selectedText": "\ue619",
-					"color": "#6b6882",
-					"selectedColor": "#aaaaaa"
-				}
-			},
-			{
-				"pagePath": "pages/index/index",
-				"text": "连接信息",
-				"iconfont": {
-					"text": "\ue711",
-					"selectedText": "\ue711",
-					"color": "#6b6882",
-					"selectedColor": "#aaaaaa"
-				}
-			},
-			{
-				"pagePath": "pages/canvas/canvas",
-				"text": "可视化展示",
-				"iconfont": {
-					"text": "\ue630",
-					"selectedText": "\ue630",
-					"color": "#6b6882",
-					"selectedColor": "#aaaaaa"
-				}
-			},
-			{
-				"pagePath": "pages/devices/devices",
-				"text": "设备绑定",
-				"iconfont": {
-					"text": "\uebb7",
-					"selectedText": "\uebb7",
-					"color": "#6b6882",
-					"selectedColor": "#aaaaaa"
-				}
-			}
-		]
 	}
+	// ,
+	// "tabBar": {
+	// 	"iconfontSrc": "static/iconfont/iconfont.ttf",
+	// 	"backgroundColor": "#3d3b4f",
+	// 	"color": "#6b6882",
+	// 	"selectedColor": "#aaaaaa",
+	// 	"list": [
+	// 		{
+	// 			"pagePath": "pages/indexpage/indexpage",
+	// 			"text": "首页",
+	// 			"iconfont": {
+	// 				"text": "\ue619",
+	// 				"selectedText": "\ue619",
+	// 				"color": "#6b6882",
+	// 				"selectedColor": "#aaaaaa"
+	// 			}
+	// 		},
+	// 		{
+	// 			"pagePath": "pages/index/index",
+	// 			"text": "连接信息",
+	// 			"iconfont": {
+	// 				"text": "\ue711",
+	// 				"selectedText": "\ue711",
+	// 				"color": "#6b6882",
+	// 				"selectedColor": "#aaaaaa"
+	// 			}
+	// 		},
+	// 		{
+	// 			"pagePath": "pages/canvas/canvas",
+	// 			"text": "可视化展示",
+	// 			"iconfont": {
+	// 				"text": "\ue630",
+	// 				"selectedText": "\ue630",
+	// 				"color": "#6b6882",
+	// 				"selectedColor": "#aaaaaa"
+	// 			}
+	// 		},
+	// 		{
+	// 			"pagePath": "pages/devices/devices",
+	// 			"text": "设备绑定",
+	// 			"iconfont": {
+	// 				"text": "\uebb7",
+	// 				"selectedText": "\uebb7",
+	// 				"color": "#6b6882",
+	// 				"selectedColor": "#aaaaaa"
+	// 			}
+	// 		}
+	// 	]
+	// }
 }

@@ -10,7 +10,9 @@
 	var edge = 0.1
 	function judgeone(data_queue){
 		let sum = 0
+		
 		for(let i in data_queue){
+			// data_queue[i]/=1000
 			sum+=data_queue[i]
 		}
 		let per = data_queue["5"]+data_queue["6"]+data_queue["11"]
@@ -18,6 +20,7 @@
 		let percent = (per/sum).toFixed(3)
 		let ill_percent=(percent-edge)/edge/5
 		ill_percent=ill_percent<0?0:(ill_percent*100).toFixed(1)
+		// console.log(data_queue)
 		return {percent:ill_percent,advices:`有${ill_percent}%的概率为扁平足`}
 	}
 	function judge(data_queue){
@@ -39,7 +42,13 @@
 			console.log('App Hide')
 		},
 		globalData:{
-			deviceid:"123",
+			currentUser:{
+				did:"",
+				username:"",
+				weight:0,
+				gender:-1
+			},
+			deviceid:"device_1",
 			msgs:[{
 				topic:"test_topic",
 				msg:"test_msg"
@@ -69,6 +78,8 @@
 			},
 			topic_sub:[
 				"post_foot",
+				"post/foot/device_1",
+				"post/foot/device_1/#"
 			],
 			opt_influxdb:{
 				url:`http://${ip}:8086`,
@@ -87,7 +98,8 @@
 					percent:0,
 					advices:""
 				}
-			}
+			},
+			msg_recieved:false
 		},
 		methods:{
 			onConnected(){
@@ -95,6 +107,7 @@
 				let msgs = getApp().globalData.msgs
 				client.on("message",
 					(topic, message) =>{
+						getApp().globalData.msg_recieved=true
 					  try{
 						  let msgjson=JSON.parse(message.toString())
 						  // if(topic=='post_foot'){
@@ -118,6 +131,7 @@
 						  topic:topic,
 						  msg:message
 					  })
+					  getApp().globalData.msg_recieved=false
 					}
 				)
 				getApp().globalData.topic_sub.forEach((value,index)=>{
@@ -128,8 +142,6 @@
 							})
 					})
 				})
-				getApp().globalData.client.subscribe("post/foot/"+this.deviceid)
-				getApp().globalData.client.subscribe("post/foot/"+this.deviceid+"/#")
 			},
 			createConnection(){
 				uni.showLoading({

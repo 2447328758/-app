@@ -90,11 +90,12 @@ export default {
 			context:null,
 			windowHeight:900,
 			windowWidth:900,
-			imageWidth:360,
+			imageWidth:138*2,
 			imageHeight:370,
 			canvasWidth:1000,
 			canvasHeight:1000,
-			canvasInfo:0
+			canvasInfo:0,
+			top:65
 		}
 	},
 	mounted: async function () {
@@ -103,7 +104,9 @@ export default {
 		this.windowWidth =  systeminfo.windowWidth
 		this.canvasHeight=Math.round(this.imageHeight*this.rate)
 		this.canvasWidth=Math.round(this.imageWidth*this.rate)
-		this.context=uni.createCanvasContext('firstCanvas', this)	
+		this.context=uni.createCanvasContext('firstCanvas', this)
+		let windowinfo = uni.getWindowInfo()
+		this.top=windowinfo.windowTop*2
 		for(let i in foot_model){
 			let {x,y,min,max,value,path,startPos,color,width,height,id,startTag}=foot_model[i]
 			this.foot[i]=new FootPartial(x,y,min,max,value,path,startPos,color,width,height,id,startTag)
@@ -111,7 +114,8 @@ export default {
 		this.update({})
 		let r = await this.getOffsetX()
 		this.canvasInfo = r
-		// console.log(this.canvasInfo)
+		this.top=r.top
+		console.log(this.canvasInfo)
 		// console.log((this.windowWidth-this.imageWidth*this.rate)/2)
 	},
 	methods: {
@@ -140,7 +144,8 @@ export default {
 		choose_partial(e,show_click_point){
 			// console.log(e)
 			let {x,y} = e.detail
-			y-=65
+			y-=this.top
+			// y-=65
 			x+=this.pageScrollx
 			y+=this.pageScrolly
 			x-=(this.windowWidth-this.imageWidth*this.rate)/2
