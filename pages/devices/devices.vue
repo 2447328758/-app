@@ -15,10 +15,19 @@
 				  <div class="input-group-prepend">
 				    <span class="input-group-text">性别</span>
 				  </div>
-				  <select class="custom-select" id="gender" v-model="userinfo.gender">
+				  <!-- <select class="custom-select" id="gender" v-model="userinfo.gender">
 				      <option value="1">男</option>
 				      <option value="0">女</option>
-				    </select>
+				    </select> -->
+					<!-- <textarea class="form-control" readonly disabled @click="chooseGender" v-model="genderDict[userinfo.gender]"></textarea> -->
+					<radio-group class="genderGroup" name="gender" @change="genderChanged">
+						<label class="genderItem">
+							<radio :value="'1'" :checked="userinfo.gender=='1'"/><text>男</text>
+						</label>
+						<label class="genderItem">
+							<radio :value="'0'" :checked="userinfo.gender=='0'"/><text>女</text>
+						</label>
+					</radio-group>
 				</div>
 			</div>
 			<div class="form-group">
@@ -78,7 +87,6 @@
 				</tr>
 			</tbody>
 		</table>
-		
 		<!-- 弹出层 -->
 		<uni-popup ref="popup" type="bottom">
 			<view class="dialog">
@@ -101,10 +109,18 @@
 						  <div class="input-group-prepend">
 						    <span class="input-group-text">性别</span>
 						  </div>
-						  <select class="custom-select" id="gender" v-model="userinfo.gender">
+						  <!-- <select class="custom-select" id="gender" v-model="userinfo.gender">
 						      <option value="1">男</option>
 						      <option value="0">女</option>
-						    </select>
+						    </select> -->
+							 <radio-group class="genderGroup"  name="gender" @change="genderChanged">
+							 	<label class="genderItem">
+							 		<radio :value="'1'" :checked="userinfo.gender=='1'"/><text>男</text>
+							 	</label>
+							 	<label class="genderItem">
+							 		<radio :value="'0'" :checked="userinfo.gender=='0'"/><text>女</text>
+							 	</label>
+							 </radio-group>
 						</div>
 					</div>
 					<div class="form-group">
@@ -140,7 +156,9 @@
 			</view>
 			
 		</uni-popup>
+		
 	</view>
+		
 </template>
 
 <script>
@@ -163,6 +181,12 @@
 		}
 		return false
 	}
+	var defaultUserInfo={
+					did:"",
+					username:"",
+					gender:-1,
+					weight:0
+				}
 	export default {
 		data() {
 			return {
@@ -214,6 +238,7 @@
 				// this.users.push({"did":this.addid})
 				
 				let index = this.editIndex
+				console.log(index)
 				if(index!=-1){
 					let uid = this.users[index].uid
 					this.users[index]=userinfo
@@ -224,7 +249,7 @@
 						this.choose(index)
 					}
 				}else{
-					if(this.users.filter(e=>e.did=userinfo.did).length!=0){
+					if(this.users.filter(e=>e.did==userinfo.did).length!=0){
 						toastError("不能重复添加相同的id！")
 						return
 					}
@@ -256,8 +281,14 @@
 				// this.users.splice(index,1)
 				// this.add(index)
 			},
+			genderChanged(e){
+				this.userinfo.gender=e.detail.value
+			},
 			closeDialog(){
 				this.$refs.popup.close()
+				this.editIndex=-1
+				this.userinfo=defaultUserInfo
+				
 			}
 		},
 		onLoad(){
@@ -276,10 +307,10 @@
 <style lang="scss">
 .out{
 	padding: 6px;
-	.btn_add{
-		// margin-left: 80%;
-		margin: 15px;
-	}
+	// .btn_add{
+	// 	// margin-left: 80%;
+	// 	margin: 15px;
+	// }
 	.devices{
 		text-align: center;
 	}
@@ -291,7 +322,11 @@
 	}
 	.btn_group{
 		margin: 10px auto;
-		width: 30%;
+		display: flex;
+		.btn_add{
+			display: inline-block;
+			margin:auto;
+		}
 	}
 }
 .dialog{
@@ -305,6 +340,18 @@
 	}
 	.closeDialog{
 		margin-left: 80%;
+	}
+}
+
+.genderGroup{
+	flex: 1;
+	display: flex;
+	border: 1px solid rgb(206, 212, 218);
+	border-radius: 0 3px 3px 0;
+	color: rgb(73, 80, 87);
+	.genderItem{
+		display: inline-block;
+		margin: 5px auto;
 	}
 }
 </style>

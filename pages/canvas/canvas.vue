@@ -221,7 +221,8 @@
 	margin: auto;
 	text-align: center;
 	font-size: 25px;
-	margin: 20rpx;
+	height: 50px;
+	/* margin: 20rpx; */
 }
 .log{
 	margin: 5px;

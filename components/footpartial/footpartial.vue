@@ -112,18 +112,17 @@ export default {
 			this.foot[i]=new FootPartial(x,y,min,max,value,path,startPos,color,width,height,id,startTag)
 		}
 		this.update({})
-		let r = await this.getOffsetX()
-		this.canvasInfo = r
-		this.top=r.top
-		console.log(this.canvasInfo)
+		this.getOffsetX()
 		// console.log((this.windowWidth-this.imageWidth*this.rate)/2)
 	},
 	methods: {
 		async getOffsetX(){
 			let selectQuery = uni.createSelectorQuery();
-			let r = null
-			selectQuery.select("#firstCanvas").boundingClientRect((result)=>{r=result}).exec()
-			return r
+			selectQuery.select("#firstCanvas").boundingClientRect((result)=>{
+				// console.log(result)
+				this.top=result.top
+			}).exec()
+			
 		},
 		update(data,update=true){//key 和 value 是Number类型，是一个对象
 			this.data = data
@@ -145,13 +144,14 @@ export default {
 			// console.log(e)
 			let {x,y} = e.detail
 			y-=this.top
+			console.log(this.top)
 			// y-=65
 			x+=this.pageScrollx
 			y+=this.pageScrolly
 			x-=(this.windowWidth-this.imageWidth*this.rate)/2
 			x/=this.rate
 			y/=this.rate
-			console.log(x,y)
+			// console.log(x,y)
 			
 			// console.log(this.pageScrolly)
 			// console.log(x,y)
