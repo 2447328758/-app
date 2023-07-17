@@ -80,7 +80,6 @@
 					<td>
 						<div class="btn-group-sm btn-group-vertical">
 							<button @click="choose(i)" class="btn btn_oper btn-outline-primary btn-sm" style="width: 46px;">设置</button>
-							<button @click="del(i)" class="btn btn_oper btn-outline-danger btn-sm" style="width: 46px;">删除</button>
 							<button @click="edit(i)" class="btn btn_oper btn-outline-warning btn-sm" style="width: 46px;">编辑</button>								
 						</div>
 					</td>
@@ -150,7 +149,9 @@
 					<div class="btn_group">
 						<!-- <button @click="add" class="btn btn-outline-primary btn_add" type="button">保存</button> -->
 						<!-- <button @click="add" class="btn btn-outline-primary btn_add" type="button">编辑</button> -->
-						<button @click="add" class="btn btn-outline-primary btn_add" type="button">更改信息</button>
+						<button @click="add" class="btn btn-outline-primary btn_add" type="button">保存</button>
+						<button @click="del" class="btn btn-outline-warning btn_add" >删除</button>
+					
 					</div>
 				</div>
 			</view>
@@ -238,7 +239,6 @@
 				// this.users.push({"did":this.addid})
 				
 				let index = this.editIndex
-				console.log(index)
 				if(index!=-1){
 					let uid = this.users[index].uid
 					this.users[index]=userinfo
@@ -262,7 +262,7 @@
 				let oldid = getApp().globalData.deviceid
 				getApp().globalData.client.unsubscribe("post/foot/"+oldid)
 				getApp().globalData.deviceid=this.users[index].did
-				getApp().globalData.client.subscribe("post/foot/"+this.users[index].did)
+				// getApp().globalData.client.subscribe("post/foot/"+this.users[index].did)
 				getApp().globalData.client.subscribe("post/foot/"+this.users[index].did+"/#")
 				getApp().globalData.currentUser = this.users[index]
 				uni.showToast({
@@ -270,6 +270,12 @@
 				})			
 			},
 			del(index){
+				if(typeof index != 'number' && this.editIndex!=-1){
+					this.del(this.editIndex)
+					this.editIndex=-1
+					this.closeDialog()
+					return
+				}
 				getApp().globalData.client.unsubscribe("post/foot/"+this.users[index].did)
 				this.users.splice(index,1)
 				saveDevices(this.users)
@@ -288,7 +294,6 @@
 				this.$refs.popup.close()
 				this.editIndex=-1
 				this.userinfo=defaultUserInfo
-				
 			}
 		},
 		onLoad(){
