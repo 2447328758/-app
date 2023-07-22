@@ -2,18 +2,19 @@
 	<view class="">
 		<view class="content">
 			<bgImg></bgImg>
-			
-			<view class="title">
-				<h2>骨关节病辅助检查系统</h2>
-				<view class="line"></view>
+			<view class="container">
+				<view class="title">
+					<h2>骨关节病辅助检查系统</h2>
+					<view class="line"></view>
+				</view>
+				
+				<scroll-view scroll-y class="btns">
+					<menuItem class="menuItem"  @click.native="clicked('devices')">用户信息</menuItem>
+					<menuItem class="menuItem"  @click.native="clicked('canvas')">足底压力分布图</menuItem>
+					<menuItem class="menuItem"  @click.native="clicked('chart')">足底压力统计曲线</menuItem>
+					<menuItem class="menuItem"  @click.native="clicked('index')">debug</menuItem>
+				</scroll-view>
 			</view>
-			
-			<scroll-view scroll-y class="btns">
-				<menuItem class="menuItem"  @click.native="clicked('devices')">用户信息</menuItem>
-				<menuItem class="menuItem"  @click.native="clicked('canvas')">足底压力分布图</menuItem>
-				<menuItem class="menuItem"  @click.native="clicked('chart')">足底压力统计曲线</menuItem>
-				<menuItem class="menuItem"  @click.native="clicked('index')">debug</menuItem>
-			</scroll-view>
 		</view>
 	</view>
 </template>
@@ -49,13 +50,20 @@
 	src: url(../../static/font/ZhengQingKeLengKuTi-2.ttf);
 }
 .content{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+	.container{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		// margin-top: 50%;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translateY(-50%) translateX(-50%);
+	}
 	.title{
-		margin-top:150rpx;
-		margin-bottom: 30rpx;
+		// margin-top:200rpx;
+		// margin-bottom: 30rpx;
 		font-family: maobizi;
 		opacity: 0.85;
 		color: #3d3b8f;

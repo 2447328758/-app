@@ -5,7 +5,7 @@
 	// 120.26.95.127
 	import {sign} from "./static/js/JWTUtils.js"
 	import {judgeData} from "static/js/judge.js"
-import { data } from './uni_modules/uview-ui/libs/mixin/mixin.js'
+	import { data } from './uni_modules/uview-ui/libs/mixin/mixin.js'
 	var ip = "121.43.108.78"
 	var data_queue={}
 	var len = 0
@@ -71,7 +71,7 @@ import { data } from './uni_modules/uview-ui/libs/mixin/mixin.js'
 				bucket:"foot",
 				_measurement:"data",
 				_field:"value",
-				token:"bRGdoe6kKmbZvI1gpLiDzAzpy-q6QzQeFnWizc7E09yW9YbSX0xuQqMV_NR97zR3GIGBnbk-zQkpiSdAbLjHeA=="
+				token:"3q6NsSB2qADiSyGfBBZJlmgLdB45j55TIdzXI1JveGL4DUR8DDEA-J3h05BeZ5TQOq6KTcxtYtckhqfh15uB7w=="
 			},
 			judges:undefined,
 			msg_recieved:false

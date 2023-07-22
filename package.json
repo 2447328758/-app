@@ -1,6 +1,8 @@
 {
 	"dependencies": {
 		"mqtt": "^3.0.0",
-		"uuid": "^9.0.0"
+		"uuid": "^9.0.0",
+		"dmhsq-mysql-pool": "^1.0.4"
+
 	}
 }
