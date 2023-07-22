@@ -21,7 +21,7 @@
 					  <div class="input-group-prepend">
 					    <span class="input-group-text">密码</span>
 					  </div>
-					  <textarea class="form-control" aria-label="With textarea" v-model="userinfo.pwd"></textarea>
+					  <textarea class="form-control" aria-label="With textarea" @input="oninputPwd" v-model="pwd"></textarea>
 					</div>
 				</div>
 
@@ -35,18 +35,43 @@
 </template>
 
 <script>
+	function getPwd(pwd,mask){
+		let password=""
+		let j = 0
+		for(let i in mask){
+			if(mask[i]!='*'){
+				password+=mask[i]
+			}else{
+				password+=pwd[j]
+				j++
+			}
+		}
+		return password
+	}
 	import { toastError, toastSuccess } from '../../unijs/unitoast'
 	import {getDevices, saveDevices,genderDict,getUser} from "../../unijs/userCache.js"
 	export default {
 		data() {
 			return {
+				pwd:"",
 				userinfo:{
-					username:"002109715050",
-					pwd:"123456",
+					username:"",
+					pwd:"",
 				}
 			};
 		},
 		methods:{
+			oninputPwd(e){
+				let pwd = e.detail.value
+				this.userinfo.pwd=getPwd(this.userinfo.pwd,pwd)
+				let mask = ""
+				for(let i in pwd){
+					mask+='*'
+				}
+				this.pwd=mask
+				console.log(this.userinfo)
+			}
+			,
 			login(){
 				var that = this
 				uni.request({

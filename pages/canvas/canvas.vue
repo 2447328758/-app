@@ -181,6 +181,7 @@
 			uni.$on("updateFootView",(data)=>{
 				
 				that.$refs.footCanvas.update(data)
+				console.log(data)
 				this.judge=getApp().globalData.judges
 				// console.log(this.judge)
 			})
