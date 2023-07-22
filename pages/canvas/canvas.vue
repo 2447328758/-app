@@ -48,16 +48,28 @@
 
 		
 		<view class="log keji">
-			<text class="badge-info badge" style="font-size: 25px;">参考结果</text>
+			<text class="badge-info badge" style="font-size: 25px;">建议</text>
 			<view class="judge one">
 				<text class="badge badge-dark">左脚</text>
 				<br/>
-				<text class="advice">{{judge?judge.left.advices:"无建议"}}</text>
+				<text class="advice" v-if="!judge">{{"无建议"}}</text>
+				<view v-if="judge">
+					<view class="advice"  v-for="d in judge.left.diagnostic">
+						您有<span :style="d.percent>=50?'color:red;':'color:orangered;'" >{{d.percent}}%</span>的概率患有<span style="color: red;">{{d.diease.name}}</span>
+					</view>
+				</view>
 			</view>
 			<view class="judge one">
 				<text class="badge badge-dark">右脚</text>
 				<br/>
-				<text class="advice">{{judge?judge.right.advices:"无建议"}}</text>
+				<!-- <text class="advice">{{judge?judge.right.advices:"无建议"}}</text> -->
+				<text class="advice" v-if="!judge">{{"无建议"}}</text>
+				<view v-if="judge">
+					<view class="advice" v-if="judge" v-for="d in judge.right.diagnostic">
+						您有<span :style="d.percent>=50?'color:red;':'color:orangered;'" >{{d.percent}}%</span>的概率患有<span style="color: red;">{{d.diease.name}}</span>
+					</view>
+				</view>
+				
 			</view>
 		</view>
 		<!-- <view class="log">

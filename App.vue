@@ -26,6 +26,7 @@
 			console.log('App Hide')
 		},
 		globalData:{
+			user:null,
 			currentUser:{
 				did:"",
 				username:"",
@@ -71,7 +72,7 @@
 				bucket:"foot",
 				_measurement:"data",
 				_field:"value",
-				token:"3q6NsSB2qADiSyGfBBZJlmgLdB45j55TIdzXI1JveGL4DUR8DDEA-J3h05BeZ5TQOq6KTcxtYtckhqfh15uB7w=="
+				token:"rKv9lSfB_48eJYikE7F86i3Hum-PyRpvuFsbsPJzsL8f3aR5ek9gyAlNE1cwY-PZj9pb_0L7xMeEwYSRgVDnlQ=="
 			},
 			judges:undefined,
 			msg_recieved:false
@@ -92,6 +93,7 @@
 								if(len>=36){
 									// console.log(data_queue,len)
 									this.globalData.judges = judge(Object.values(data_queue))
+									console.log(this.globalData.judges)
 									uni.$emit("updateFootView",data_queue)
 									data_queue={}
 									len=0

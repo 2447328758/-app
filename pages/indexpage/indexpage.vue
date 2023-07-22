@@ -9,7 +9,7 @@
 				</view>
 				
 				<scroll-view scroll-y class="btns">
-					<menuItem class="menuItem"  @click.native="clicked('devices')">用户信息</menuItem>
+					<!-- <menuItem class="menuItem"  @click.native="clicked('devices')">用户信息</menuItem> -->
 					<menuItem class="menuItem"  @click.native="clicked('canvas')">足底压力分布图</menuItem>
 					<menuItem class="menuItem"  @click.native="clicked('chart')">足底压力统计曲线</menuItem>
 					<menuItem class="menuItem"  @click.native="clicked('index')">debug</menuItem>
@@ -37,7 +37,7 @@
 		},
 		methods:{
 			clicked(choice){
-				console.log(choice)
+				// console.log(choice)
 				navagateTo("/pages/"+choice+"/"+choice)	
 			}
 		}
