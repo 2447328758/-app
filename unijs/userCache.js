@@ -17,4 +17,13 @@ function saveDevices(users){
 	})
 }
 
-export{getDevices, saveDevices,genderDict}
+function getUser(){
+	return {
+		did:"",
+		username:"",
+		gender:-1,
+		weight:0
+	}
+}
+
+export{getDevices, saveDevices,genderDict,getUser}

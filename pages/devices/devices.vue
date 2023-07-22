@@ -226,7 +226,6 @@
 				if(!userinfo.uid)userinfo.uid=uuidv4()
 				console.log(userinfo)
 				// console.log(this.users.filter(e=>e.did=userinfo.did))
-				
 				let illegle = false
 				if(
 					notNullOrEmpty(userinfo.username,"用户名")

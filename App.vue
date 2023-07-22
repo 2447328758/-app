@@ -26,6 +26,7 @@
 			console.log('App Hide')
 		},
 		globalData:{
+			doctor:null,
 			currentUser:{
 				did:"",
 				username:"",

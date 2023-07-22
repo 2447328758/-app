@@ -2,8 +2,25 @@
 	"easycom": {
 			"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
 	},
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+		    "path" : "pages/loginPage/loginPage",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "医生登录",
+		        "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#6b6882",
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				}
+		    }
+		    
+		}
+		,{
+			
 		    "path" : "pages/indexpage/indexpage",
 		    "style" :                                                                                    
 		    {
@@ -56,6 +73,7 @@
             }
             
         }
+        
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
