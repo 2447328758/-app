@@ -33,12 +33,12 @@
 			<div class="form-group">
 				<div class="input-group">
 				  <div class="input-group-prepend">
-				    <span class="input-group-text">体重</span>
+				    <span class="input-group-text">年龄</span>
 				  </div>
 				  <!-- <textarea class="form-control" aria-label="With textarea" v-model="addid"></textarea> -->
-				  <input class="form-control" type="number" v-model="userinfo.weight"/>
+				  <input class="form-control" type="number" v-model="userinfo.age"/>
 				  <div class="input-group-append">
-				      <span class="input-group-text">kg</span>
+				      <span class="input-group-text">岁</span>
 				    </div>
 				</div>
 			</div>
@@ -66,7 +66,7 @@
 				<tr>
 					<th scope="col" width="">用户名</th>
 					<th scope="col" width="">性别</th>
-					<th scope="col" width="">体重</th>
+					<th scope="col" width="">年龄</th>
 					<th scope="col" width="">设备Id</th>
 					<th scope="col" width="">操作</th>
 				</tr>
@@ -75,7 +75,7 @@
 				<tr v-for="u,i in users" :class="{choosed:u.did==did}" :key="u.did">
 					<td>{{u.username}}</td>
 					<td>{{genderDict[u.gender]}}</td>
-					<td>{{u.weight}}kg</td>
+					<td>{{u.age}}岁</td>
 					<td>{{u.did}}</td>
 					<td>
 						<div class="btn-group-sm btn-group-vertical">
@@ -125,12 +125,12 @@
 					<div class="form-group">
 						<div class="input-group">
 						  <div class="input-group-prepend">
-						    <span class="input-group-text">体重</span>
+						    <span class="input-group-text">年龄</span>
 						  </div>
 						  <!-- <textarea class="form-control" aria-label="With textarea" v-model="addid"></textarea> -->
-						  <input class="form-control" type="number" v-model="userinfo.weight"/>
+						  <input class="form-control" type="number" v-model="userinfo.age"/>
 						  <div class="input-group-append">
-						      <span class="input-group-text">kg</span>
+						      <span class="input-group-text">岁</span>
 						    </div>
 						</div>
 					</div>
@@ -186,7 +186,8 @@
 					did:"",
 					username:"",
 					gender:-1,
-					weight:0
+					weight:0,
+					age:20
 				}
 	export default {
 		data() {
@@ -196,7 +197,8 @@
 					did:"",
 					username:"",
 					gender:-1,
-					weight:0
+					weight:0,
+					age:20
 				},
 				users:[
 					
@@ -220,7 +222,8 @@
 					gender:this.userinfo.gender,
 					weight:Number(this.userinfo.weight),
 					did:this.userinfo.did,
-					uid:this.userinfo.uid
+					uid:this.userinfo.uid,
+					age:this.userinfo.age
 				}
 				
 				if(!userinfo.uid)userinfo.uid=uuidv4()
@@ -264,6 +267,7 @@
 				// getApp().globalData.client.subscribe("post/foot/"+this.users[index].did)
 				getApp().globalData.client.subscribe("post/foot/"+this.users[index].did+"/#")
 				getApp().globalData.currentUser = this.users[index]
+				console.log(getApp().globalData.currentUser)
 				uni.showToast({
 					title:"设置成功！"
 				})			

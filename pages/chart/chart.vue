@@ -5,7 +5,8 @@
 			<ul class="list-group">
 			  <li class="list-group-item">用户名：{{userinfo.username}}</li>
 			  <li class="list-group-item">性别：{{genderDict[userinfo.gender]}}</li>
-			  <li class="list-group-item">体重：{{userinfo.weight}}kg</li>
+			  <!-- <li class="list-group-item">体重：{{userinfo.weight}}kg</li> -->
+			  <li class="list-group-item">年龄：{{userinfo.age}}岁</li>
 			  <li class="list-group-item">设备Id：{{userinfo.did}}</li>
 			  <!-- <li class="list-group-item">And a fifth one</li> -->
 			</ul>
