@@ -34,7 +34,7 @@
 				gender:-1,
 				age:20
 			},
-			deviceid:"device_1",
+			deviceid:"_device",
 			msgs:[{
 				topic:"test_topic",
 				msg:"test_msg"
@@ -64,8 +64,7 @@
 			},
 			topic_sub:[
 				"post_foot",
-				// "post/foot/device_1",
-				"post/foot/device_1/#"
+				"post/foot/_device/#"
 			],
 			opt_influxdb:{
 				url:`http://${ip}:8086`,

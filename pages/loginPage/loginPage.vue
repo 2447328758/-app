@@ -105,7 +105,11 @@
 						if(res.data.code===0){
 							let userset = res.data.data
 							let users = []
-							
+							let t = getUser()
+							t.did="_device"
+							t.username="临时用户"
+							t.age=0
+							users.push(t)
 							for(let i in userset){
 								let user = userset[i]
 								let user_t = getUser()

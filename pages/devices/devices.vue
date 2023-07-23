@@ -217,6 +217,8 @@
 				// 	})
 				// 	return;
 				// }
+				toastError("请在电脑端添加")
+				return
 				let userinfo = {
 					username:this.userinfo.username,
 					gender:this.userinfo.gender,
@@ -262,7 +264,7 @@
 			},
 			choose(index){
 				let oldid = getApp().globalData.deviceid
-				getApp().globalData.client.unsubscribe("post/foot/"+oldid)
+				getApp().globalData.client.unsubscribe("post/foot/"+oldid+"/#")
 				getApp().globalData.deviceid=this.users[index].did
 				// getApp().globalData.client.subscribe("post/foot/"+this.users[index].did)
 				getApp().globalData.client.subscribe("post/foot/"+this.users[index].did+"/#")
@@ -284,6 +286,9 @@
 				saveDevices(this.users)
 			},
 			edit(index){
+				
+				toastError("请在电脑端编辑")
+				return
 				this.$refs.popup.open('dialog')
 				this.userinfo=this.users[index]
 				this.editIndex=index
