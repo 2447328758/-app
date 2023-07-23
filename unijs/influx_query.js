@@ -4,23 +4,7 @@
  * @param {String} token 具有操作权限的token
  * @param {String} org 组织名称
  * @param {String} bucket 水桶名称
- * @param {Object} data 数据接收对象
- * data 格式
- *  {
- *    categories: [],
- *    series: []
- *  }
  * @author 戴东阳
- * @tutorial
- * ```
- *  let data = {
- *  	categories: [],
- *  	series: [
- *  	]
- *	}
- *	const query = new InfluxQuery(url,token,org,bucket,data)
- *	query.query(client_id)()
- * ```
  */
 function InfluxQuery(url,token,org,bucket){
 	this.url=url

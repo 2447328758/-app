@@ -1,25 +1,25 @@
 <template>
 	<view class="out">
 		<bgImg></bgImg>
-		<div class="form">
-			<div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-prepend">
-				    <span class="input-group-text">用户名</span>
-				  </div>
-				  <textarea class="form-control" aria-label="With textarea" v-model="userinfo.username"></textarea>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-prepend">
-				    <span class="input-group-text">性别</span>
-				  </div>
+		<!-- <div class="form"> -->
+			<!-- <div class="form-group"> -->
+				<!-- <div class="input-group"> -->
+				  <!-- <div class="input-group-prepend"> -->
+				    <!-- <span class="input-group-text">用户名</span> -->
+				  <!-- </div> -->
+				  <!-- <textarea class="form-control" aria-label="With textarea" v-model="userinfo.username"></textarea> -->
+				<!-- </div> -->
+			<!-- </div> -->
+			<!-- <div class="form-group"> -->
+				<!-- <div class="input-group"> -->
+				  <!-- <div class="input-group-prepend"> -->
+				    <!-- <span class="input-group-text">性别</span> -->
+				  <!-- </div> -->
 				  <!-- <select class="custom-select" id="gender" v-model="userinfo.gender">
 				      <option value="1">男</option>
 				      <option value="0">女</option>
 				    </select> -->
-					<!-- <textarea class="form-control" readonly disabled @click="chooseGender" v-model="genderDict[userinfo.gender]"></textarea> -->
+					<!-- <textarea class="form-control" readonly disabled @click="chooseGender" v-model="genderDict[userinfo.gender]"></textarea>
 					<radio-group class="genderGroup" name="gender" @change="genderChanged">
 						<label class="genderItem">
 							<radio :value="'1'" :checked="userinfo.gender=='1'"/><text>男</text>
@@ -34,33 +34,31 @@
 				<div class="input-group">
 				  <div class="input-group-prepend">
 				    <span class="input-group-text">年龄</span>
-				  </div>
-				  <!-- <textarea class="form-control" aria-label="With textarea" v-model="addid"></textarea> -->
-				  <input class="form-control" type="number" v-model="userinfo.age"/>
-				  <div class="input-group-append">
-				      <span class="input-group-text">岁</span>
-				    </div>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-prepend">
-				    <span class="input-group-text">设备id</span>
-				  </div>
-				  <textarea class="form-control" aria-label="With textarea" v-model="userinfo.did"></textarea>
-				</div>
+				  </div> -->
+				  <!-- <textarea class="form-control" aria-label="With textarea" v-model="addid"></textarea>
+				  <!-- <input class="form-control" type="number" v-model="userinfo.age"/> -->
+				  <!-- <div class="input-group-append"> -->
+				      <!-- <span class="input-group-text">岁</span> -->
+				    <!-- </div> -->
+				<!-- </div> -->
+			<!-- </div> -->
+			<!-- <div class="form-group"> -->
+				<!-- <div class="input-group"> -->
+				  <!-- <div class="input-group-prepend"> -->
+				    <!-- <span class="input-group-text">设备id</span> -->
+				  <!-- </div> -->
+				  <!-- <textarea class="form-control" aria-label="With textarea" v-model="userinfo.did"></textarea> -->
+				<!-- </div> -->
 				
 				<!-- <small id="deviceidHelp" class="form-text text-muted">为了更好地提供服务</small> -->
-				<small id="deviceidHelp" class="form-text text-muted">包装标签上写有设备id,如果数据未正常显示请检查设备id是否输入正确</small>
-			</div>
-
-			<div class="btn_group">
+				<!-- <small id="deviceidHelp" class="form-text text-muted">包装标签上写有设备id,如果数据未正常显示请检查设备id是否输入正确</small> -->
+			<!-- </div> -->
+			<!-- <div class="btn_group"> -->
 				<!-- <button @click="add" class="btn btn-outline-primary btn_add" type="button">保存</button> -->
 				<!-- <button @click="add" class="btn btn-outline-primary btn_add" type="button">编辑</button> -->
-				<button @click="add" class="btn btn-outline-primary btn_add" type="button">添加</button>
-			</div>
-		</div>
-		
+				<!-- <button @click="add" class="btn btn-outline-primary btn_add" type="button">添加</button> -->
+			<!-- </div> -->
+		<!-- </div> -->
 		<table class="table table-striped table-bordered devices">
 			<thead>
 				<tr>

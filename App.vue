@@ -86,17 +86,16 @@
 						getApp().globalData.msg_recieved=true
 					  try{
 						  let msgjson=JSON.parse(message.toString())
-						  // if(topic=='post_foot'){
 						  if(topic=='post/foot/'+this.globalData.deviceid){
 								data_queue[msgjson.id]=msgjson.value
 								let data = {}
 								data[msgjson.id]=msgjson.value
 								uni.$emit("updateFootView",data)
+								console.log(data)
 								len++
 								if(Object.values(data_queue).length==36){
 									console.log(data_queue,Object.values(data_queue).length)
 									this.globalData.judges = judge(Object.values(data_queue))
-									// uni.$emit("updateFootView",data_queue)
 									data_queue={}
 									len=0
 								}

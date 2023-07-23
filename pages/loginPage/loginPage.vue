@@ -69,7 +69,7 @@
 					mask+='*'
 				}
 				this.pwd=mask
-				console.log(this.userinfo)
+				// console.log(this.userinfo)
 			}
 			,
 			login(){

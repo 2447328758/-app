@@ -1,18 +1,10 @@
 import crypto from "crypto"
-
-//使用jwt进行登录
-//app端推荐使用，因为app端需要多端同时登录
-//clientid 和 username 建议随机产生避免重复
-//用法:
-
 let options = {
 	username:"",
 	clientId:"",
 	password:"",
 	
 }
-
-
 
 function getBytes(str){
 	let a = []
@@ -21,7 +13,7 @@ function getBytes(str){
     return Uint8Array.from(a)
 }
 const secret = getBytes("token!@#$%^")
-
+var hmac = crypto.createHmac("sha256", "token!@#$%^");
 function replaceAll(s,char1,char2){
 	let r = ""
 	for(let i in s){
@@ -52,7 +44,6 @@ function getHeaderAndPayload(obj){
 }
 
 
-var hmac = crypto.createHmac("sha256", "token!@#$%^");
 
 function sign(obj){
 
