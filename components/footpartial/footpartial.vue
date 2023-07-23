@@ -56,8 +56,10 @@ function FootPartial(x,y,min,max,value,path,startPos,color,width,height,id,start
 		context.stroke()
 		context.setFillStyle("#000000")
 		context.setFontSize(this.width/6+this.height/15)
-		context.fillText(this.id.toString()+":"+this.value.toString()+"pa",
-				this.left_top[0]+this.width*0.1, this.left_top[1]+ this.height*0.45)
+		// context.fillText(this.id.toString()+":"+this.value.toString()+"pa",
+		// 		this.left_top[0]+this.width*0.1, this.left_top[1]+ this.height*0.45)
+		context.fillText(this.value.toString(),
+				this.left_top[0]+this.width*0.45, this.left_top[1]+ this.height*0.45)
 		// context.restore()//回复变换矩阵
 		// context.bezierCurveTo()
 	}
@@ -130,7 +132,11 @@ export default {
 			// console.log(rate)
 			this.context.scale(rate,rate)
 			for(let i in data){
-				this.foot[i].setValue(data[i])
+				try{
+					this.foot[i].setValue(data[i])
+				}catch(e){
+					console.log(i)
+				}
 			}
 			for(let i in this.foot){
 				this.foot[i].draw(this.context)

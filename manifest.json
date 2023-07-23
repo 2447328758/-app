@@ -22,7 +22,8 @@
         "distribute" : {
             /* android打包配置 */
             "android" : {
-                "permissions" : [ "<uses-permission android:name=\"android.permission.INTERNET\"/>" ]
+                "permissions" : [ "<uses-permission android:name=\"android.permission.INTERNET\"/>" ],
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ]
             },
             /* ios打包配置 */
             "ios" : {

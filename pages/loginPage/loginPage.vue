@@ -78,7 +78,7 @@
 					url:"http://121.43.108.78:3307/doctor/login?uname="+this.userinfo.username+"&pwd="+this.userinfo.pwd,
 					timeout:3000,
 					success(res){
-						// console.log(res)
+						console.log(res)
 						if(res.data.code===0){
 							toastSuccess("登陆成功！")
 							that.setDoctor(res.data.data)

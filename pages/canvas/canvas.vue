@@ -7,6 +7,7 @@
 		<!-- 鞋垫 -->
 		<view class="xiedian">
 			<footpartial @footClicked="onFootClicked" ref="footCanvas" :pageScrollx="pageScrollx" :pageScrolly="pageScrolly"></footpartial>
+			<h4 style="text-align: right; margin-right: 50rpx; transform: translateY(-120%);">单位：N</h4>
 			<view class="extraData keji" style="font-size: 14px;">
 				<text class="extraData item">左脚压力平均值：{{extraData.left}}</text>
 				<text class="extraData item">左右脚平均压力差：{{extraData.delta}}</text>
@@ -134,7 +135,8 @@
 					left:0,
 					right:0,
 					delta:0
-				}
+				},
+				footCanvas:undefined
 			}
 		},
 		methods: {
@@ -177,14 +179,6 @@
 			},
 		},
 		onLoad(){
-			let that = this
-			uni.$on("updateFootView",(data)=>{
-				
-				that.$refs.footCanvas.update(data)
-				console.log(data)
-				this.judge=getApp().globalData.judges
-				// console.log(this.judge)
-			})
 			const opt = opt_influx
 			this.influx_query=new InfluxQuery(opt.url, opt.token, opt.org, opt.bucket)
 			uni.$on("log",(log)=>this.log+=log+"\n")
@@ -192,6 +186,15 @@
 			
 			uni.$on("extraDataRecieved",(data)=>{
 				this.extraData[data.id]=data.value
+			})
+		},
+		mounted() {
+			let that = this
+			this.footCanvas=this.$refs.footCanvas
+			uni.$on("updateFootView",(data)=>{
+				that.footCanvas.update(data)
+				this.judge=getApp().globalData.judges
+				// console.log(this.judge)
 			})
 		},
 		onPageScroll(e) {
