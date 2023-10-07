@@ -7,9 +7,9 @@
 	import {judgeData} from "static/js/judge.js"
 	import { data } from './uni_modules/uview-ui/libs/mixin/mixin.js'
 	var ip = "121.43.108.78"
-	var data_queue={}
 	var len = 0
-	var edge = 0.1
+	var buffer_data={}
+	var state = {left:false,right:false}
 
 	function judge(data_queue){
 		// console.log(data_queue)
@@ -87,23 +87,30 @@
 					  try{
 						  let msgjson=JSON.parse(message.toString())
 						  if(topic=='post/foot/'+this.globalData.deviceid){
-								data_queue[msgjson.id]=msgjson.value
-								let data = {}
-								data[msgjson.id]=msgjson.value
-								uni.$emit("updateFootView",data)
-								console.log(data)
-								len++
-								if(Object.values(data_queue).length==36){
-									console.log(data_queue,Object.values(data_queue).length)
-									this.globalData.judges = judge(Object.values(data_queue))
-									data_queue={}
-									len=0
+								let data = String(msgjson.value).split(",")
+								let offset = 0
+								if(msgjson.id=="left"){
+									offset=0;
+									state.left=true
+								}else if(msgjson.id=="right"){
+									offset=18;
+									state.right=true
+								}
+								for(let i in data){
+									buffer_data[Number(i)+offset+1]=data[i];
+								}
+								if(state.left&&state.right){
+									this.globalData.judges = judge(Object.values(buffer_data))
+									uni.$emit("updateFootView",buffer_data);
+									console.log(this.globalData.judges)
+									state.left=false
+									state.right=false
 								}
 						  }else if(topic=='post/foot/'+this.globalData.deviceid+'/extraData'){
 							uni.$emit("extraDataRecieved",msgjson)
 						  }
 					  }catch(err){
-						  console.log(`not a json msg:${message}:${err}`)
+						  console.error(`not a json msg:${message}:${err}`)
 					  }
 					  msgs.push({
 						  topic:topic,

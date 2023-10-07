@@ -192,7 +192,6 @@
 			uni.$on("updateFootView",(data)=>{
 				that.footCanvas.update(data)
 				this.judge=getApp().globalData.judges
-				// console.log(this.judge)
 			})
 		},
 		onPageScroll(e) {

@@ -1,54 +1,56 @@
 {
-  "pages": [
-    "pages/index/index",
-    "pages/detail/detail",
-    "pages/canvas/canvas",
-    "pages/addModel/addModel"
-  ],
-  "subPackages": [],
-  "window": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
-  },
-  "tabBar": {
-    "iconfontSrc": "static/iconfont/iconfont.ttf",
-    "backgroundColor": "#3d3b4f",
-    "color": "#6b6882",
-    "selectedColor": "#aaaaaa",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "连接信息",
-        "iconfont": {
-          "text": "",
-          "selectedText": "",
-          "color": "#6b6882",
-          "selectedColor": "#aaaaaa"
-        }
-      },
-      {
-        "pagePath": "pages/detail/detail",
-        "text": "物模型",
-        "iconfont": {
-          "text": "",
-          "selectedText": "",
-          "color": "#6b6882",
-          "selectedColor": "#aaaaaa"
-        }
-      },
-      {
-        "pagePath": "pages/canvas/canvas",
-        "text": "画布",
-        "iconfont": {
-          "text": "",
-          "selectedText": "",
-          "color": "#6b6882",
-          "selectedColor": "#aaaaaa"
-        }
-      }
-    ]
-  },
-  "usingComponents": {}
+    "pages": [
+        "pages/index/index",
+        "pages/detail/detail",
+        "pages/canvas/canvas",
+        "pages/addModel/addModel",
+        "pages/demo",
+        "pages/demo/demo"
+    ],
+    "subPackages": [],
+    "window": {
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "uni-app",
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
+    },
+    "tabBar": {
+        "iconfontSrc": "static/iconfont/iconfont.ttf",
+        "backgroundColor": "#3d3b4f",
+        "color": "#6b6882",
+        "selectedColor": "#aaaaaa",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "连接信息",
+                "iconfont": {
+                    "text": "",
+                    "selectedText": "",
+                    "color": "#6b6882",
+                    "selectedColor": "#aaaaaa"
+                }
+            },
+            {
+                "pagePath": "pages/detail/detail",
+                "text": "物模型",
+                "iconfont": {
+                    "text": "",
+                    "selectedText": "",
+                    "color": "#6b6882",
+                    "selectedColor": "#aaaaaa"
+                }
+            },
+            {
+                "pagePath": "pages/canvas/canvas",
+                "text": "画布",
+                "iconfont": {
+                    "text": "",
+                    "selectedText": "",
+                    "color": "#6b6882",
+                    "selectedColor": "#aaaaaa"
+                }
+            }
+        ]
+    },
+    "usingComponents": {}
 }
