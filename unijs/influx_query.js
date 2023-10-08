@@ -123,6 +123,62 @@ from(bucket: "${bucket}")
 			let data_item = series.find(ele => ele.name==id)
 			data_item.data.push(value)
 		}
+		
+		this.queryWithFlux = function(flux){
+			try{
+				const fluxQuery = flux;
+				const myQuery = new Promise(async (resolve,reject)=>{
+					console.log("正在查询...")
+					try{
+						uni.showLoading({
+							title:"查询中..."
+						})
+						let res = await uni.request({
+							method:"POST",
+							url:`${this.url}/api/v2/query?org=${this.org}`,
+							header:{
+								"Accept-Encoding":"identity",
+								"Content-Type":"application/json",
+								"Authorization":`Token ${this.token}`
+							},
+							data:{
+								query:fluxQuery,
+								type:"flux"
+							},
+							timeout:5000
+						})
+						uni.hideLoading()
+						uni.showToast({
+							title:"查询成功！",
+						})
+						let data = []
+						let d = res.data.split("\r\n")
+						for(let i in d){
+							if(d[i]==='')continue
+							data.push(d[i].split(",").filter(ele=>ele!=""))
+						}
+						
+						resolve(data)
+						
+						console.log("查询完毕！")
+						uni.$emit("log","influx_query.query async ended")
+					}catch(err){
+						uni.$emit("log","influx_query.query async err:")
+						uni.$emit("log",JSON.stringify(err))
+						uni.hideLoading()
+						uni.showToast({
+							title:"查询失败！",
+							icon:"error"
+						})
+						return;
+					}
+				})
+				uni.$emit("log","influx_query.query ending")
+				return myQuery
+			}catch(err){
+				uni.$emit("log",err)
+			}
+		}
 	  return this
 }
 

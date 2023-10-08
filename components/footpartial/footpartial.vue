@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<canvas @click="choose_partial($event,true)" :style="{width: canvasWidth+'px', height: canvasHeight+'px'}" canvas-id="firstCanvas" id="firstCanvas"></canvas>
+		<canvas @click="choose_partial($event,shou_click_point)" :style="{width: canvasWidth+'px', height: canvasHeight+'px'}" :canvas-id="canvasId" :id="canvasId" ></canvas>
 	</view>
 </template>
 
@@ -82,6 +82,18 @@ export default {
 		"pageScrolly":{
 			default:0,
 			type:[Number]
+		},
+		"show_click_point":{
+			default:false,
+			type:[Boolean]
+		},
+		"canvasId":{
+			default:"cavans_default",
+			type:[String]
+		},
+		"size":{
+			default:1,
+			type:[Number]
 		}
 	},
 	data(){
@@ -101,12 +113,13 @@ export default {
 		}
 	},
 	mounted: async function () {
+		console.log(this.canvasId)
 		let systeminfo = await uni.getSystemInfo()
 		this.windowHeight =  systeminfo.windowHeight-systeminfo.windowBottom
 		this.windowWidth =  systeminfo.windowWidth
 		this.canvasHeight=Math.round(this.imageHeight*this.rate)
 		this.canvasWidth=Math.round(this.imageWidth*this.rate)
-		this.context=uni.createCanvasContext('firstCanvas', this)
+		this.context=uni.createCanvasContext(this.canvasId, this)
 		let windowinfo = uni.getWindowInfo()
 		this.top=windowinfo.windowTop*2
 		for(let i in foot_model){
@@ -120,7 +133,7 @@ export default {
 	methods: {
 		async getOffsetX(){
 			let selectQuery = uni.createSelectorQuery();
-			selectQuery.select("#firstCanvas").boundingClientRect((result)=>{
+			selectQuery.select("#"+this.canvasId).boundingClientRect((result)=>{
 				// console.log(result)
 				this.top=result.top
 			}).exec()
@@ -190,7 +203,7 @@ export default {
 				rate = this.windowWidth/this.imageWidth
 			else
 				rate = this.windowHeight/this.imageHeight
-			return rate
+			return rate * this.size
 		}
 	}
 }

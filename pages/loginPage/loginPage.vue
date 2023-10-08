@@ -78,9 +78,10 @@
 					url:"http://121.43.108.78:3307/doctor/login?uname="+this.userinfo.username+"&pwd="+this.userinfo.pwd,
 					timeout:3000,
 					success(res){
-						console.log(res)
+						// console.log(res)
 						if(res.data.code===0){
 							toastSuccess("登陆成功！")
+							res.data.data.jwt=res.data.jwt
 							that.setDoctor(res.data.data)
 						}else{
 							toastError(res.data.msg)
@@ -100,7 +101,7 @@
 					url:"http://121.43.108.78:3307/doctor/get?docid="+doctor.id,
 					timeout:3000,
 					success(res){
-						console.log(res)
+						// console.log(res)
 						
 						if(res.data.code===0){
 							let userset = res.data.data
@@ -120,7 +121,12 @@
 								user_t.age=user.age
 								if(user.sex=="男")user_t.gender="1"
 								if(user.sex=="女")user_t.gender="0"
-								users.push(user_t)
+								try{
+									user_t.user_id=user.user_id
+									users.push(user_t)
+								}catch{
+									console.error("this user has no user id!")
+								}
 							}
 							
 							saveDevices(users)

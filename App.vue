@@ -26,13 +26,14 @@
 			console.log('App Hide')
 		},
 		globalData:{
-			doctor:null,
+			doctor:{jwt:""},
 			currentUser:{
 				did:"",
 				username:"",
 				weight:0,
 				gender:-1,
-				age:20
+				age:20,
+				user_id:"3_1"
 			},
 			deviceid:"_device",
 			msgs:[{
@@ -102,7 +103,7 @@
 								if(state.left&&state.right){
 									this.globalData.judges = judge(Object.values(buffer_data))
 									uni.$emit("updateFootView",buffer_data);
-									console.log(this.globalData.judges)
+									// console.log(this.globalData.judges)
 									state.left=false
 									state.right=false
 								}

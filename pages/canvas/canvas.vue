@@ -6,7 +6,7 @@
 		</view>
 		<!-- 鞋垫 -->
 		<view class="xiedian">
-			<footpartial @footClicked="onFootClicked" ref="footCanvas" :pageScrollx="pageScrollx" :pageScrolly="pageScrolly"></footpartial>
+			<footpartial @footClicked="onFootClicked" :show_click_point="true" ref="footCanvas" :pageScrollx="pageScrollx" :pageScrolly="pageScrolly"></footpartial>
 			<h4 style="text-align: right; margin-right: 50rpx; transform: translateY(-120%);">单位：N</h4>
 			<view class="extraData keji" style="font-size: 14px;">
 				<text class="extraData item">左脚压力平均值：{{extraData.left}}</text>

@@ -12,6 +12,7 @@
 					<menuItem class="menuItem"  @click.native="clicked('devices')">用户信息</menuItem>
 					<menuItem class="menuItem"  @click.native="clicked('canvas')">足底压力分布图</menuItem>
 					<menuItem class="menuItem"  @click.native="clicked('chart')">足底压力统计曲线</menuItem>
+					<menuItem class="menuItem"  @click.native="clicked('dataCompare')">前后对比</menuItem>
 					<menuItem class="menuItem"  @click.native="clicked('index')">debug</menuItem>
 				</scroll-view>
 			</view>

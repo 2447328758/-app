@@ -83,6 +83,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/dataCompare/dataCompare",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "数据对比",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

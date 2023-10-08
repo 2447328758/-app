@@ -5,10 +5,14 @@ function toastSuccess(title){
 		title:title
 	})
 }
-function toastError(title){
+function toastError(title,dotask){
 	uni.showToast({
 		title:title,
 		icon:"error",
+		duration:2500,
+		complete() {
+			if(dotask)setTimeout(dotask,2000)
+		}
 	})
 }
 function toastLoading(title,dotask){
