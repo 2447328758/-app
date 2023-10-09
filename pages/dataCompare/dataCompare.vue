@@ -12,12 +12,19 @@
 				</view>
 			</view>
 			<view class="item">
-				<view class="container">
-					<view class="row">
+				<view class="container" >
+					<view class="row" >
 						<footpartial :size="sizeRate" :show_click_point="false" :key="2" :canvasId="'beforeCanvas'" ref="beforeCanvas"></footpartial>
 					</view>
 					<view class="row" style="text-align: center;display: block;">
-						上次情况(单位：N)
+						以往情况(单位：N)
+					</view>
+					<view class="row" v-if="lastInfo">
+						{{lastInfo.timeRange[0].toLocaleString()}}-{{lastInfo.timeRange[1].toLocaleString()}}
+					</view>
+					<view class="row" >
+						<button class="btn btn-primary" style="margin:5px;" @click="onBtnClicked('up')">上一次</button>
+						<button class="btn btn-primary" style="margin:5px;" @click="onBtnClicked('down')">下一次</button>
 					</view>
 				</view>
 			</view>
@@ -31,6 +38,8 @@
 	import {InfluxQuery} from "../../unijs/influx_query.js"
 	const opt_influx = getApp().globalData.opt_influxdb
 	const influx_query=new InfluxQuery(opt_influx.url, opt_influx.token, opt_influx.org, opt_influx.bucket)
+	let last = 1;
+	let lastlast = 1;
 	function handleData(data){
 		let f = (datetime)=>{
 			let date = datetime.split(" ")[0]
@@ -48,16 +57,26 @@
 		}
 	}
 	async function getLastTimeRange(){
-
+		if(last==0){
+			toastError("没有更多了哦！")
+			last=lastlast;
+			return Promise.reject("没有上次了！");
+		}
 		let res = await uni.request({
-			url:"http://121.43.108.78:1001/timeRecorder/getLast?user_id="+getApp().globalData.currentUser.user_id,
+			url:"http://121.43.108.78:1001/timeRecorder/getPrivious?user_id="+getApp().globalData.currentUser.user_id+"&last="+last,
 			header:{
 				"Authorization":`jwt ${getApp().globalData.doctor.jwt}`,
 				"Referer":"http://121.43.108.78:1001/"
 			},
 			timeout:5000
 		})
-		return handleData(res.data.data)
+		if(res.data.data.length==0){
+			toastError("没有更多了哦！")
+			last=lastlast;
+			return Promise.reject("没有上次了！");
+		}
+		lastlast=last;
+		return handleData(res.data.data[0])
 	}
 	export default {
 		data() {
@@ -94,9 +113,19 @@
 			})
 		},
 		methods:{
+			onBtnClicked(type){
+				if(type=='up')last++;
+				else if(type=="down")last--;
+				// console.log(last)
+				getLastTimeRange().then((res)=>{
+					this.lastInfo=res
+					this.getLastData()
+				})
+			}
+			,
 			getLastData(){
 				
-				console.log(this.lastInfo.timeRange[0].getTime(),this.lastInfo.timeRange[1].getTime())
+				// console.log(this.lastInfo.timeRange[0].getTime(),this.lastInfo.timeRange[1].getTime())
 				influx_query.queryWithFlux(
 				`
 				from(bucket: "foot")
@@ -108,8 +137,15 @@
 				  |> yield(name: "mean")
 				`
 				).then((res)=>{
-					// console.log(res)
+					
 					let data = {}
+					
+					if(res.length==0){
+						toastError("上次数据为空！")
+						for(let i =1;i<=36;i++)data[i]=0;
+						this.$refs.beforeCanvas.update(data)
+						return;
+					}
 					let i_value=res[0].findIndex((value)=>value==='_value')
 					let i_id=res[0].findIndex((value)=>value==='id')
 					for(let i=1;i<res.length;i++){
@@ -120,6 +156,8 @@
 					
 					
 					this.$refs.beforeCanvas.update(data)
+				}).catch((err)=>{
+					// console.log(err);
 				})
 			}
 		}
@@ -129,11 +167,14 @@
 <style lang="scss">
 .content{
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	justify-content: center;
+	align-items: center;
 	.row{
+		display: block;
 		font-size: $uni-font-size-lg;
 		color: $uni-color-primary;
+		text-align: center;
 	}
 }
 </style>
